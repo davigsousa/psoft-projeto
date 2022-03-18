@@ -3,10 +3,14 @@ package com.psoft.tccmatch.service;
 import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.model.Aluno;
 
+import java.util.List;
+
 public interface AlunoService {
-    public Aluno criar(AlunoDTO dto) throws Exception;
+    Aluno criar(AlunoDTO dto) throws Exception;
 
-    public void editar(AlunoDTO dto);
+    void editar(AlunoDTO dto);
 
-    public Aluno get(String matricula) throws Exception;
+    Aluno get(String matricula) throws Exception;
+
+    List<Aluno> getAll();
 }

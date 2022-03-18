@@ -2,26 +2,28 @@ package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.repository.AlunoRepositoryImpl;
+import com.psoft.tccmatch.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AlunoServiceImpl implements AlunoService {
     @Autowired
-    private AlunoRepositoryImpl alunoRepository;
+    private AlunoRepository alunoRepository;
 
     @Override
     public Aluno criar(AlunoDTO dto) throws Exception {
-        Optional<Aluno> aluno = alunoRepository.findByMatricula(dto.getMatricula());
+        Optional<Aluno> aluno_existe = alunoRepository.findByMatricula(dto.getMatricula());
 
-        if (aluno.isPresent()) {
+        if (aluno_existe.isPresent()) {
             throw new Exception("Aluno já existe");
         }
 
-        return new Aluno(dto.getNome(), dto.getEmail(), dto.getMatricula(), dto.getPeriodo_de_conclusao());
+        Aluno aluno = new Aluno(dto.getNome(), dto.getMatricula(), dto.getEmail(), dto.getPeriodo_de_conclusao());
+        return alunoRepository.save(aluno);
     }
 
     @Override
@@ -38,5 +40,10 @@ public class AlunoServiceImpl implements AlunoService {
         }
 
         return aluno.get();
+    }
+
+    @Override
+    public List<Aluno> getAll() {
+        return alunoRepository.findAll();
     }
 }

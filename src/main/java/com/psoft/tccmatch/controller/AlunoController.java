@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 public class AlunoController {
@@ -25,8 +26,18 @@ public class AlunoController {
         }
     }
 
+    @RequestMapping(path = "/aluno/all", method = RequestMethod.GET)
+    public ResponseEntity<?> get_alunos() {
+        try {
+            List<Aluno> result = alunoServiceImpl.getAll();
+            return ResponseEntity.ok(result);
+        } catch (Exception err) {
+            return ResponseEntity.badRequest().body(err);
+        }
+    }
+
     @RequestMapping(path = "/aluno/{matricula}", method = RequestMethod.GET)
-    public ResponseEntity<?> get_aluno(@RequestParam(value = "matricula") String matricula) {
+    public ResponseEntity<?> get_aluno(@PathVariable("matricula") String matricula) {
         try {
             Aluno result = alunoServiceImpl.get(matricula);
             return ResponseEntity.ok(result);
