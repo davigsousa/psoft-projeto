@@ -3,6 +3,7 @@ package com.psoft.tccmatch.service;
 import com.psoft.tccmatch.DTO.AdmDTO;
 import com.psoft.tccmatch.model.AdminUser;
 import com.psoft.tccmatch.repository.AdmRepository;
+import com.psoft.tccmatch.util.ErroAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class AdmServiceImpl implements AdmService {
         Optional<AdminUser> coord_existe = admRepository.findByEmail(dto.getEmail());
 
         if (coord_existe.isPresent()) {
-            throw new Exception("Já existe um usuário com esse e-mail");
+            throw ErroAdmin.erroUsuarioJaExiste();
         }
 
         AdminUser novo_coord = new AdminUser(dto.getNome(), dto.getEmail(), dto.getSenha());
@@ -31,7 +32,7 @@ public class AdmServiceImpl implements AdmService {
         Optional<AdminUser> coord_existe = admRepository.findByEmail(dto.getEmail());
 
         if (coord_existe.isPresent()) {
-            throw new Exception("Já existe um usuário com esse e-mail");
+            throw ErroAdmin.erroUsuarioJaExiste();
         }
 
         AdminUser novo_admin = new AdminUser(dto.getNome(), dto.getEmail(), dto.getSenha());

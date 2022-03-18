@@ -3,6 +3,7 @@ package com.psoft.tccmatch.service;
 import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.repository.AlunoRepository;
+import com.psoft.tccmatch.util.ErroAluno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class AlunoServiceImpl implements AlunoService {
         Optional<Aluno> aluno_existe = alunoRepository.findByMatricula(dto.getMatricula());
 
         if (aluno_existe.isPresent()) {
-            throw new Exception("Aluno já existe");
+            throw ErroAluno.erroAlunoJaExiste();
         }
 
         Aluno aluno = new Aluno(dto.getNome(), dto.getMatricula(), dto.getEmail(), dto.getPeriodo_de_conclusao());
@@ -36,7 +37,7 @@ public class AlunoServiceImpl implements AlunoService {
         Optional<Aluno> aluno = alunoRepository.findByMatricula(matricula);
 
         if (aluno.isEmpty()) {
-            throw new Exception("Aluno não existe");
+            throw ErroAluno.erroAlunoNaoExiste();
         }
 
         return aluno.get();
