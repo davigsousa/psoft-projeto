@@ -17,13 +17,9 @@ public class AlunoController {
 
     @RequestMapping(path = "/aluno/novo", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> criar_aluno(@RequestBody AlunoDTO alunoDTO) {
-        try {
-            Aluno result = alunoServiceImpl.criar(alunoDTO);
-            return ResponseEntity.ok(result);
-        } catch (Exception err) {
-            return ResponseEntity.badRequest().body(err);
-        }
+    public ResponseEntity<?> criar_aluno(@RequestBody AlunoDTO alunoDTO) throws Exception {
+        Aluno result = alunoServiceImpl.criar(alunoDTO);
+        return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "/aluno/all", method = RequestMethod.GET)
