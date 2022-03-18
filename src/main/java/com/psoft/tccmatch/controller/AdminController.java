@@ -1,7 +1,7 @@
 package com.psoft.tccmatch.controller;
 
 import com.psoft.tccmatch.DTO.AdmDTO;
-import com.psoft.tccmatch.model.Admin;
+import com.psoft.tccmatch.model.AdminUser;
 import com.psoft.tccmatch.service.AdmServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class AdminController {
     @RequestMapping(path = "/admin/novo", method = RequestMethod.POST)
     public ResponseEntity<?> cria_admin(@RequestBody AdmDTO dto) {
         try {
-            Admin response = adminService.criar_adm(dto);
+            AdminUser response = adminService.criar_adm(dto);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
