@@ -2,9 +2,9 @@ package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
 
-@Entity(name = "Admin")
-@Table(name = "Admin")
-public class Admin {
+@Entity(name = "Admin_User")
+@Table(name = "Admin_User")
+public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
@@ -18,10 +18,10 @@ public class Admin {
         return id;
     }
 
-    public Admin() {
+    public AdminUser() {
     }
 
-    public Admin(String nome, String email, String senha) {
+    public AdminUser(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -53,7 +53,7 @@ public class Admin {
 
     @Override
     public String toString() {
-        return "Admin{" +
+        return "AdminUser{" +
                 "nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 '}';
