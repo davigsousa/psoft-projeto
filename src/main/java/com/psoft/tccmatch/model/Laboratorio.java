@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,14 +17,14 @@ public class Laboratorio {
             joinColumns = @JoinColumn(name = "laboratorio_id"),
             inverseJoinColumns = @JoinColumn(name = "professor_id")
     )
-    private Set<Professor> professores;
+    private List<Professor> professores;
     @ManyToMany()
     @JoinTable(
             name = "aluno_laboratorio",
             joinColumns = @JoinColumn(name = "laboratorio_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
-    private Set<Aluno> alunos;
+    private List<Aluno> alunos;
 
     private Laboratorio() {
     }
@@ -44,19 +45,19 @@ public class Laboratorio {
         this.nome = nome;
     }
 
-    public Set<Professor> getProfessores() {
+    public List<Professor> getProfessores() {
         return professores;
     }
 
-    public void setProfessores(Set<Professor> professores) {
+    public void setProfessores(List<Professor> professores) {
         this.professores = professores;
     }
 
-    public Set<Aluno> getAlunos() {
+    public List<Aluno> getAlunos() {
         return alunos;
     }
 
-    public void setAlunos(Set<Aluno> alunos) {
+    public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
     }
 }

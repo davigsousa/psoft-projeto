@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
-    @Query("SELECT p FROM Professor p WHERE p.email = :email")
+    @Query("SELECT p FROM Professor p JOIN p.laboratorios WHERE p.email = :email")
     Optional<Professor> findByEmail(@Param("email") String email);
 }
