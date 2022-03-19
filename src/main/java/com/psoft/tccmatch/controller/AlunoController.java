@@ -24,21 +24,13 @@ public class AlunoController {
 
     @RequestMapping(path = "/aluno/all", method = RequestMethod.GET)
     public ResponseEntity<?> get_alunos() {
-        try {
-            List<Aluno> result = alunoServiceImpl.getAll();
-            return ResponseEntity.ok(result);
-        } catch (Exception err) {
-            return ResponseEntity.badRequest().body(err);
-        }
+        List<Aluno> result = alunoServiceImpl.getAll();
+        return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "/aluno/{matricula}", method = RequestMethod.GET)
-    public ResponseEntity<?> get_aluno(@PathVariable("matricula") String matricula) {
-        try {
-            Aluno result = alunoServiceImpl.get(matricula);
-            return ResponseEntity.ok(result);
-        } catch (Exception err) {
-            return ResponseEntity.badRequest().body(err);
-        }
+    public ResponseEntity<?> get_aluno(@PathVariable("matricula") String matricula) throws Exception {
+        Aluno result = alunoServiceImpl.get(matricula);
+        return ResponseEntity.ok(result);
     }
 }
