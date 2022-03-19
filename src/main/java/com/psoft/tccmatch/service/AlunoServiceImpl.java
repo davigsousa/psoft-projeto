@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
+import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.repository.AlunoRepository;
 import com.psoft.tccmatch.util.ErroAluno;
@@ -16,7 +17,7 @@ public class AlunoServiceImpl implements AlunoService {
     private AlunoRepository alunoRepository;
 
     @Override
-    public Aluno criar(AlunoDTO dto) throws Exception {
+    public Aluno criar(AlunoDTO dto) throws ApiException {
         Optional<Aluno> aluno_existe = alunoRepository.findByMatricula(dto.getMatricula());
 
         if (aluno_existe.isPresent()) {
@@ -28,12 +29,19 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public void editar(AlunoDTO dto) {
-        return;
+    public Aluno editar(AlunoDTO dto) throws ApiException {
+        Aluno aluno = get(dto.getMatricula());
+
+        aluno.setEmail(dto.getEmail());
+        aluno.setMatricula(dto.getMatricula());
+        aluno.setNome(dto.getNome());
+        aluno.setPeriodo_de_conclusao(dto.getPeriodo_de_conclusao());
+
+        return alunoRepository.save(aluno);
     }
 
     @Override
-    public Aluno get(String matricula) throws Exception {
+    public Aluno get(String matricula) throws ApiException {
         Optional<Aluno> aluno = alunoRepository.findByMatricula(matricula);
 
         if (aluno.isEmpty()) {
@@ -46,5 +54,11 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public List<Aluno> getAll() {
         return alunoRepository.findAll();
+    }
+
+    @Override
+    public void remover(String matricula) throws ApiException {
+        Aluno aluno = get(matricula);
+        alunoRepository.delete(aluno);
     }
 }
