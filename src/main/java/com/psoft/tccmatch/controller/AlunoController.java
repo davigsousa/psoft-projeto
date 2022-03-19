@@ -17,22 +17,34 @@ public class AlunoController {
     @Autowired
     private AlunoServiceImpl alunoServiceImpl;
 
-    @RequestMapping(path = "/aluno/novo", method = RequestMethod.POST)
+    @RequestMapping(path = "/alunos", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> criar_aluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.criar(alunoDTO);
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(path = "/aluno/all", method = RequestMethod.GET)
+    @RequestMapping(path = "/alunos", method = RequestMethod.GET)
     public ResponseEntity<?> get_alunos() {
         List<Aluno> result = alunoServiceImpl.getAll();
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(path = "/aluno/{matricula}", method = RequestMethod.GET)
+    @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.GET)
     public ResponseEntity<?> get_aluno(@PathVariable("matricula") String matricula) throws ApiException {
         Aluno result = alunoServiceImpl.get(matricula);
         return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(path = "/alunos", method = RequestMethod.PUT)
+    public ResponseEntity<?> editarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
+        Aluno result = alunoServiceImpl.editar(alunoDTO);
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deletarAluno(@PathVariable("matricula") String matricula) throws ApiException {
+        alunoServiceImpl.remover(matricula);
+        return (ResponseEntity<?>) ResponseEntity.noContent();
     }
 }

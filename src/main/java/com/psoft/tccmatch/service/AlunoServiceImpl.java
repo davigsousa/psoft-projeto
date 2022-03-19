@@ -55,4 +55,10 @@ public class AlunoServiceImpl implements AlunoService {
     public List<Aluno> getAll() {
         return alunoRepository.findAll();
     }
+
+    @Override
+    public void remover(String matricula) throws ApiException {
+        Aluno aluno = get(matricula);
+        alunoRepository.delete(aluno);
+    }
 }
