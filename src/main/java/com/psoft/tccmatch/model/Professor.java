@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,7 @@ public class Professor {
     private Long id;
     private String nome;
     private String email;
-    @OneToMany(mappedBy = "professores", cascade = CascadeType.PERSIST, targetEntity = Laboratorio.class)
+    @OneToMany()
     private List<Laboratorio> laboratorios;
 
     public Professor() {
@@ -44,8 +45,16 @@ public class Professor {
         this.email = email;
     }
 
-    public List<Laboratorio> getLaboratorios() {
-        return laboratorios;
+    public List<String> getLaboratorios() {
+        List<String> labs = new ArrayList<>();
+        for (Laboratorio lab : this.laboratorios) {
+            labs.add(lab.getNome());
+        }
+        return labs;
+    }
+
+    public List<Laboratorio> laboratoriosEntities() {
+        return this.laboratorios;
     }
 
     public void setLaboratorios(List<Laboratorio> laboratorios) {
