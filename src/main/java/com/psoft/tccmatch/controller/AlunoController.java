@@ -19,19 +19,19 @@ public class AlunoController {
 
     @RequestMapping(path = "/alunos", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> criar_aluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
+    public ResponseEntity<?> criarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.criar(alunoDTO);
         return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "/alunos", method = RequestMethod.GET)
-    public ResponseEntity<?> get_alunos() {
+    public ResponseEntity<?> getAlunos() {
         List<Aluno> result = alunoServiceImpl.getAll();
         return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.GET)
-    public ResponseEntity<?> get_aluno(@PathVariable("matricula") String matricula) throws ApiException {
+    public ResponseEntity<?> getAluno(@PathVariable("matricula") String matricula) throws ApiException {
         Aluno result = alunoServiceImpl.get(matricula);
         return ResponseEntity.ok(result);
     }
@@ -45,6 +45,6 @@ public class AlunoController {
     @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deletarAluno(@PathVariable("matricula") String matricula) throws ApiException {
         alunoServiceImpl.remover(matricula);
-        return (ResponseEntity<?>) ResponseEntity.noContent();
+        return (ResponseEntity<?>) ResponseEntity.status(204);
     }
 }
