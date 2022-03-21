@@ -3,6 +3,7 @@ package com.psoft.tccmatch.model;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class TCC {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
