@@ -10,7 +10,7 @@ public class TCCDTO {
     private String titulo;
     private String descricao;
     private Boolean status;
-    private List<AreaEstudo> areasEstudo;
+    private List<Long> areasEstudo;
 
     public String getTitulo() { return titulo; }
 
@@ -18,5 +18,5 @@ public class TCCDTO {
 
     public Boolean getStatus() { return status; }
 
-    public List<AreaEstudo> getAreasEstudo() { return areasEstudo; }
+    public List<Long> getAreasEstudo() { return areasEstudo; }
 }
