@@ -2,7 +2,7 @@ package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
 
-public class SolicitacaoOrientacao {
+public class Orientacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
@@ -13,23 +13,14 @@ public class SolicitacaoOrientacao {
     private String tema;
     private Boolean status;
 
-    public SolicitacaoOrientacao() {
-    }
+    public Orientacao () {}
 
-    public SolicitacaoOrientacao(Professor professor, Aluno aluno, String orientacao, String tema, Boolean status) {
+    public Orientacao(Professor professor, Aluno aluno, String orientacao, String tema, Boolean status) {
         this.professor = professor;
         this.aluno = aluno;
         this.orientacao = orientacao;
         this.tema = tema;
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Professor getProfessor() {
