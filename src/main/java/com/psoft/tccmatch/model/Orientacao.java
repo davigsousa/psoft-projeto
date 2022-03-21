@@ -2,25 +2,42 @@ package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
 
+@Entity
+@Table
 public class Orientacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
+    private String theme;
+    @OneToOne()
     private Professor professor;
+    @OneToOne()
     private Aluno aluno;
-    private String orientacao;
-    private String tema;
-    private Boolean status;
+    @OneToOne()
+    private AreaEstudo area;
+    private String periodoTCC;
+    private Boolean statusAprovacao;
+    private Boolean statusFinalizacao;
 
     public Orientacao () {}
 
-    public Orientacao(Professor professor, Aluno aluno, String orientacao, String tema, Boolean status) {
+    public Orientacao(String theme, Professor professor, Aluno aluno, AreaEstudo area, String periodoTCC, Boolean statusAprovacao) {
+        this.theme = theme;
         this.professor = professor;
         this.aluno = aluno;
-        this.orientacao = orientacao;
-        this.tema = tema;
-        this.status = status;
+        this.area = area;
+        this.periodoTCC = periodoTCC;
+        this.statusAprovacao = statusAprovacao;
+        this.statusFinalizacao = false;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public Professor getProfessor() {
@@ -39,27 +56,35 @@ public class Orientacao {
         this.aluno = aluno;
     }
 
-    public String getOrientacao() {
-        return orientacao;
+    public AreaEstudo getAreaInteresse() {
+        return area;
     }
 
-    public void setOrientacao(String orientacao) {
-        this.orientacao = orientacao;
+    public void setAreaInteresse(AreaEstudo area) {
+        this.area = area;
     }
 
-    public String getTema() {
-        return tema;
+    public String getPeriodoTCC() {
+        return periodoTCC;
     }
 
-    public void setTema(String tema) {
-        this.tema = tema;
+    public void setPeriodoTCC(String periodoTCC) {
+        this.periodoTCC = periodoTCC;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getStatusAprovacao() {
+        return statusAprovacao;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setStatusAprovacao(Boolean statusAprovacao) {
+        this.statusAprovacao = statusAprovacao;
+    }
+
+    public Boolean getStatusFinalizacao() {
+        return statusFinalizacao;
+    }
+
+    public void setStatusFinalizacao(Boolean statusFinalizacao) {
+        this.statusFinalizacao = statusFinalizacao;
     }
 }
