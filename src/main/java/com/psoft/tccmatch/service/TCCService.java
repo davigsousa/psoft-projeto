@@ -5,5 +5,5 @@ import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.TCC;
 
 public interface TCCService {
-    TCC cria(TCCDTO dto) throws ApiException;
+    TCC criar(TCCDTO dto) throws ApiException;
 }
