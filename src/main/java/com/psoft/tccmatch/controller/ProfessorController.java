@@ -44,7 +44,7 @@ public class ProfessorController {
     }
 
     @RequestMapping(path = "professor/edit", method = RequestMethod.PUT)
-    public ResponseEntity<?> delete(@RequestBody ProfessorDTO dto) throws ApiException {
+    public ResponseEntity<?> update(@RequestBody ProfessorDTO dto) throws ApiException {
         professorService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
