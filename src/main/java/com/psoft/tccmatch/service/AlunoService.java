@@ -13,6 +13,8 @@ public interface AlunoService {
 
     Aluno get(String matricula) throws ApiException;
 
+    Aluno getById(Long id) throws ApiException;
+
     List<Aluno> getAll();
 
     void remover(String matricula) throws ApiException;
