@@ -12,15 +12,17 @@ public class Aluno {
     private String nome;
     private String matricula;
     private String email;
-    private String periodo_de_conclusao;
+    private String senha;
+    private String periodoDeConclusao;
 
     private Aluno() {}
 
-    public Aluno(String nome, String matricula, String email, String periodo_de_conclusao) {
+    public Aluno(String nome, String matricula, String email, String senha, String periodoDeConclusao) {
         this.nome = nome;
         this.matricula = matricula;
         this.email = email;
-        this.periodo_de_conclusao = periodo_de_conclusao;
+        this.senha = senha;
+        this.periodoDeConclusao = periodoDeConclusao;
     }
 
     public Long getId() {
@@ -51,12 +53,20 @@ public class Aluno {
         this.email = email;
     }
 
-    public String getPeriodo_de_conclusao() {
-        return periodo_de_conclusao;
+    public String getPeriodoDeConclusao() {
+        return periodoDeConclusao;
     }
 
-    public void setPeriodo_de_conclusao(String periodo_de_conclusao) {
-        this.periodo_de_conclusao = periodo_de_conclusao;
+    public void setPeriodoDeConclusao(String periodoDeConclusao) {
+        this.periodoDeConclusao = periodoDeConclusao;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     @Override
