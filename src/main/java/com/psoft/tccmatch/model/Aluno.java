@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "aluno")
@@ -14,6 +15,16 @@ public class Aluno {
     private String email;
     private String senha;
     private String periodoDeConclusao;
+    @OneToMany()
+    private List<AreaEstudo> areasEstudo;
+    @OneToMany()
+    private List<Reporte> reportes;
+    @OneToOne()
+    private SolicitacaoOrientacao solicitacao;
+    @OneToOne()
+    private PropostaTCC proposta;
+    @OneToOne()
+    private Orientacao orientacao;
 
     private Aluno() {}
 
@@ -72,5 +83,45 @@ public class Aluno {
     @Override
     public String toString() {
         return this.matricula + " - " + this.nome + " - " + this.email;
+    }
+
+    public List<AreaEstudo> getAreasEstudo() {
+        return areasEstudo;
+    }
+
+    public void setAreasEstudo(List<AreaEstudo> areasEstudo) {
+        this.areasEstudo = areasEstudo;
+    }
+
+    public List<Reporte> getReportes() {
+        return reportes;
+    }
+
+    public void setReportes(List<Reporte> reportes) {
+        this.reportes = reportes;
+    }
+
+    public SolicitacaoOrientacao getSolicitacao() {
+        return solicitacao;
+    }
+
+    public void setSolicitacao(SolicitacaoOrientacao solicitacao) {
+        this.solicitacao = solicitacao;
+    }
+
+    public PropostaTCC getProposta() {
+        return proposta;
+    }
+
+    public void setProposta(PropostaTCC proposta) {
+        this.proposta = proposta;
+    }
+
+    public Orientacao getOrientacao() {
+        return orientacao;
+    }
+
+    public void setOrientacao(Orientacao orientacao) {
+        this.orientacao = orientacao;
     }
 }

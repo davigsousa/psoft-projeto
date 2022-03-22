@@ -14,8 +14,6 @@ public class Professor {
     private String email;
     private String senha;
     private int maxOrientandos;
-    @OneToMany()
-    private List<Laboratorio> laboratorios;
     @ManyToMany()
     @JoinTable(
             name = "professor_area_estudo",
@@ -25,6 +23,14 @@ public class Professor {
     private List<AreaEstudo> areasEstudo;
     @OneToMany()
     private List<SolicitacaoOrientacao> solicitacoes;
+    @OneToMany()
+    private List<PropostaTCC> propostas;
+    @OneToMany()
+    private List<Orientacao> orientacoes;
+    @OneToMany()
+    private List<Laboratorio> laboratorios;
+    @OneToMany()
+    private List<Reporte> reportes;
 
     public Professor() {
     }
@@ -88,5 +94,45 @@ public class Professor {
 
     public void setMaxOrientandos(int maxOrientandos) {
         this.maxOrientandos = maxOrientandos;
+    }
+
+    public List<AreaEstudo> getAreasEstudo() {
+        return areasEstudo;
+    }
+
+    public void setAreasEstudo(List<AreaEstudo> areasEstudo) {
+        this.areasEstudo = areasEstudo;
+    }
+
+    public List<SolicitacaoOrientacao> getSolicitacoes() {
+        return solicitacoes;
+    }
+
+    public void setSolicitacoes(List<SolicitacaoOrientacao> solicitacoes) {
+        this.solicitacoes = solicitacoes;
+    }
+
+    public List<PropostaTCC> getPropostas() {
+        return propostas;
+    }
+
+    public void setPropostas(List<PropostaTCC> propostas) {
+        this.propostas = propostas;
+    }
+
+    public List<Orientacao> getOrientacoes() {
+        return orientacoes;
+    }
+
+    public void setOrientacoes(List<Orientacao> orientacoes) {
+        this.orientacoes = orientacoes;
+    }
+
+    public List<Reporte> getReportes() {
+        return reportes;
+    }
+
+    public void setReportes(List<Reporte> reportes) {
+        this.reportes = reportes;
     }
 }
