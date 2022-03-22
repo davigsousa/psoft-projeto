@@ -12,6 +12,8 @@ public class PropostaTCC {
     private String titulo;
     private String descricao;
     private String status;
+    @OneToOne()
+    private SolicitacaoOrientacao solicitacao;
     @OneToMany()
     private List<AreaEstudo> areasEstudo;
 
