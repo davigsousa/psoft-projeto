@@ -12,4 +12,6 @@ public interface PropostaTCCService {
     PropostaTCC getById(Long id) throws ApiException;
     
     List<PropostaTCC> getAll();
+
+    List<PropostaTCC> getAllFromProf();
 }

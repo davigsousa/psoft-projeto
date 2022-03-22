@@ -31,4 +31,10 @@ public class PropostaTCCController {
         List<PropostaTCC> response = propostaTccService.getAll();
         return ResponseEntity.ok(response);
     }
+
+    @RequestMapping(path = "tcc/all-professor", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllByProfessores() {
+        List<PropostaTCC> response = propostaTccService.getAllFromProf();
+        return ResponseEntity.ok(response);
+    }
 }

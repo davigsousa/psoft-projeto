@@ -1,6 +1,5 @@
 package com.psoft.tccmatch.repository;
 
-import com.psoft.tccmatch.model.AdminUser;
 import com.psoft.tccmatch.model.Professor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

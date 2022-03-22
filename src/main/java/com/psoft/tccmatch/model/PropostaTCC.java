@@ -12,6 +12,10 @@ public class PropostaTCC {
     private String titulo;
     private String descricao;
     private String status;
+    @OneToOne
+    private Aluno aluno;
+    @OneToOne()
+    private Professor professor;
     @OneToOne()
     private SolicitacaoOrientacao solicitacao;
     @OneToMany()
@@ -20,11 +24,20 @@ public class PropostaTCC {
     public PropostaTCC(){
     }
 
-    public PropostaTCC(String titulo, String descricao, String status, List<AreaEstudo> areasEstudo) {
+    public PropostaTCC(String titulo, String descricao, String status, List<AreaEstudo> areasEstudo, Aluno aluno) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
         this.areasEstudo = areasEstudo;
+        this.aluno = aluno;
+    }
+
+    public PropostaTCC(String titulo, String descricao, String status, List<AreaEstudo> areasEstudo, Professor professor) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.status = status;
+        this.areasEstudo = areasEstudo;
+        this.professor = professor;
     }
 
     public Long getId() {
@@ -65,5 +78,17 @@ public class PropostaTCC {
 
     public void setAreasEstudo(List<AreaEstudo> areasEstudo) {
         this.areasEstudo = areasEstudo;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public SolicitacaoOrientacao getSolicitacao() {
+        return solicitacao;
     }
 }
