@@ -9,13 +9,13 @@ public class AreaEstudo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
-    private String label;
+    private String assunto;
 
     public AreaEstudo() {
     }
 
-    public AreaEstudo(String label) {
-        this.label = label;
+    public AreaEstudo(String assunto) {
+        this.assunto = assunto;
     }
 
 
@@ -23,11 +23,11 @@ public class AreaEstudo {
         return id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getAssunto() {
+        return assunto;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
     }
 }

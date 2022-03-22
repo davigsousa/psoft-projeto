@@ -5,7 +5,7 @@ import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
-import com.psoft.tccmatch.repository.TCCRepository;
+import com.psoft.tccmatch.repository.PropostaTCCRepository;
 import com.psoft.tccmatch.util.ErroAreaEstudo;
 import com.psoft.tccmatch.util.ErroTCC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ import java.util.Optional;
 @Service
 public class PropostaTCCServiceImpl implements PropostaTCCService {
     @Autowired
-    private TCCRepository tccRepository;
+    private PropostaTCCRepository propostaTccRepository;
     @Autowired
     private AreaEstudoRepository areaEstudoRepository;
 
     @Override
     public PropostaTCC criar(PropostaTCCDTO dto) throws ApiException {
-        Optional<PropostaTCC> tcc_existe = tccRepository.findByTitulo(dto.getTitulo());
+        Optional<PropostaTCC> tcc_existe = propostaTccRepository.findByTitulo(dto.getTitulo());
 
         if (tcc_existe.isPresent()) {
             throw ErroTCC.erroTCCJaExiste();
@@ -47,12 +47,12 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         }
 
         PropostaTCC propostaTcc = new PropostaTCC(dto.getTitulo(), dto.getDescricao(), dto.getStatus(), areas);
-        return tccRepository.save(propostaTcc);
+        return propostaTccRepository.save(propostaTcc);
     }
 
     @Override
     public PropostaTCC getById(Long id) throws ApiException {
-        Optional<PropostaTCC> tccOpt = tccRepository.findById(id);
+        Optional<PropostaTCC> tccOpt = propostaTccRepository.findById(id);
 
         if(tccOpt.isEmpty()){
             throw ErroTCC.erroTCCNaoExiste();
@@ -61,5 +61,5 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         return tccOpt.get();
     }
     
-    public List<PropostaTCC> getAll() { return tccRepository.findAll(); }
+    public List<PropostaTCC> getAll() { return propostaTccRepository.findAll(); }
 }

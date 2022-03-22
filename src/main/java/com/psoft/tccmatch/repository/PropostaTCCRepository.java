@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface TCCRepository extends JpaRepository<PropostaTCC, Long> {
+public interface PropostaTCCRepository extends JpaRepository<PropostaTCC, Long> {
     Optional<PropostaTCC> findByTitulo(String titulo);
 
 }

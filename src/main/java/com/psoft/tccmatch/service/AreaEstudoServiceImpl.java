@@ -16,8 +16,8 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     private AreaEstudoRepository areaEstudoRepository;
 
     @Override
-    public AreaEstudo getByLabel(String label) throws ApiException {
-        Optional<AreaEstudo> area_opt = areaEstudoRepository.findByLabel(label);
+    public AreaEstudo getByAssunto(String assunto) throws ApiException {
+        Optional<AreaEstudo> area_opt = areaEstudoRepository.findByAssunto(assunto);
         if (area_opt.isEmpty()) {
             throw ErroAreaEstudo.erroAreaNaoExiste();
         }
@@ -34,12 +34,12 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     }
 
     @Override
-    public AreaEstudo create(String label) throws ApiException {
-        Optional<AreaEstudo> area_opt = areaEstudoRepository.findByLabel(label);
+    public AreaEstudo create(String assunto) throws ApiException {
+        Optional<AreaEstudo> area_opt = areaEstudoRepository.findByAssunto(assunto);
         if (area_opt.isPresent()) {
             throw ErroAreaEstudo.erroAreaJaExiste();
         }
-        AreaEstudo area_estudo = new AreaEstudo(label);
+        AreaEstudo area_estudo = new AreaEstudo(assunto);
         areaEstudoRepository.save(area_estudo);
         return area_estudo;
     }

@@ -6,11 +6,11 @@ import com.psoft.tccmatch.model.AreaEstudo;
 import java.util.List;
 
 public interface AreaEstudoService {
-    AreaEstudo getByLabel(String label) throws ApiException;
+    AreaEstudo getByAssunto(String assunto) throws ApiException;
 
     AreaEstudo getById(Long id) throws ApiException;
 
-    AreaEstudo create(String label) throws ApiException;
+    AreaEstudo create(String assunto) throws ApiException;
 
     List<AreaEstudo> getAll();
 }
