@@ -9,10 +9,11 @@ public class SolicitacaoOrientacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-
     private String resposta;
     private Boolean isAprovado;
     private String solicitante;
+    @ManyToOne()
+    private Professor professor;
 
     public SolicitacaoOrientacao(String resposta, Boolean isAprovado, String solicitante) {
         this.resposta = resposta;

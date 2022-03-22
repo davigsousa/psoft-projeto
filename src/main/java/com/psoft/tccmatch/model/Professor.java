@@ -16,6 +16,15 @@ public class Professor {
     private int maxOrientandos;
     @OneToMany()
     private List<Laboratorio> laboratorios;
+    @ManyToMany()
+    @JoinTable(
+            name = "professor_area_estudo",
+            joinColumns = @JoinColumn(name = "professor_id"),
+            inverseJoinColumns = @JoinColumn(name = "area_estudo_id")
+    )
+    private List<AreaEstudo> areasEstudo;
+    @OneToMany()
+    private List<SolicitacaoOrientacao> solicitacoes;
 
     public Professor() {
     }
