@@ -17,20 +17,18 @@ public class Orientacao {
     private Aluno aluno;
     @OneToOne()
     private AreaEstudo area;
-    private String periodoTCC;
-    private Boolean statusAprovacao;
-    private Boolean statusFinalizacao;
-    
+    private String periodoInicio;
+    private String periodoFim;
+
     public Orientacao() {}
 
-    public Orientacao(PropostaTCC propostaTcc, Professor professor, Aluno aluno, AreaEstudo area, String periodoTCC, Boolean statusAprovacao) {
+    public Orientacao(PropostaTCC propostaTcc, Professor professor, Aluno aluno, AreaEstudo area, String periodoInicio) {
         this.propostaTcc = propostaTcc;
         this.professor = professor;
         this.aluno = aluno;
         this.area = area;
-        this.periodoTCC = periodoTCC;
-        this.statusAprovacao = statusAprovacao;
-        this.statusFinalizacao = false;
+        this.periodoInicio = periodoInicio;
+        this.periodoFim = null;
     }
 
     public PropostaTCC getTcc() {
@@ -65,27 +63,20 @@ public class Orientacao {
         this.area = area;
     }
 
-    public String getPeriodoTCC() {
-        return periodoTCC;
+    public String getPeriodoInicio() {
+        return periodoInicio;
     }
 
-    public void setPeriodoTCC(String periodoTCC) {
-        this.periodoTCC = periodoTCC;
+    public void setPeriodoInicio(String periodoInicio) {
+        this.periodoInicio = periodoInicio;
     }
 
-    public Boolean getStatusAprovacao() {
-        return statusAprovacao;
+    public String getPeriodoFim() {
+        return periodoFim;
     }
 
-    public void setStatusAprovacao(Boolean statusAprovacao) {
-        this.statusAprovacao = statusAprovacao;
+    public void setPeriodoFim(String periodoFim) {
+        this.periodoFim = periodoFim;
     }
 
-    public Boolean getStatusFinalizacao() {
-        return statusFinalizacao;
-    }
-
-    public void setStatusFinalizacao(Boolean statusFinalizacao) {
-        this.statusFinalizacao = statusFinalizacao;
-    }
 }

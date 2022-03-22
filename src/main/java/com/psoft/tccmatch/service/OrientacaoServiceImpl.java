@@ -41,7 +41,7 @@ public class OrientacaoServiceImpl implements OrientacaoService {
         AreaEstudo areaEstudo = areaEstudoService.getById(dto.getIdAreaInteresse());
         PropostaTCC propostaTcc = propostaTccService.getById(dto.getIdThemeTCC());
 
-        Orientacao orientacaoTCC = new Orientacao(propostaTcc, professor, aluno, areaEstudo, dto.getPeriodoTCC(), dto.getStatusAprovacao());
+        Orientacao orientacaoTCC = new Orientacao(propostaTcc, professor, aluno, areaEstudo, dto.getPeriodoInicio());
         return orientacaoRepository.save(orientacaoTCC);
     }
 
