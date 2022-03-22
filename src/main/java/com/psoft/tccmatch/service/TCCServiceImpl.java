@@ -61,4 +61,6 @@ public class TCCServiceImpl implements TCCService{
 
         return tccOpt.get();
     }
+    
+    public List<TCC> getAll() { return tccRepository.findAll(); }
 }
