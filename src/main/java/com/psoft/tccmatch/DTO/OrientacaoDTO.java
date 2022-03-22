@@ -1,18 +1,15 @@
 package com.psoft.tccmatch.DTO;
 
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.Professor;
-
 public class OrientacaoDTO {
-    private String theme;
+    private Long idThemeTCC;
     private Long idProfessor;
     private Long idAluno;
     private Long idAreaInteresse;
     private String periodoTCC;
     private Boolean statusAprovacao;
 
-    public String getTheme() {
-        return theme;
+    public Long getIdThemeTCC() {
+        return idThemeTCC;
     }
 
     public Long getIdProfessor() {

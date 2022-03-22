@@ -9,7 +9,8 @@ public class Orientacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
-    private String theme;
+    @OneToOne
+    private TCC tcc;
     @OneToOne()
     private Professor professor;
     @OneToOne()
@@ -19,11 +20,11 @@ public class Orientacao {
     private String periodoTCC;
     private Boolean statusAprovacao;
     private Boolean statusFinalizacao;
+    
+    public Orientacao() {}
 
-    public Orientacao () {}
-
-    public Orientacao(String theme, Professor professor, Aluno aluno, AreaEstudo area, String periodoTCC, Boolean statusAprovacao) {
-        this.theme = theme;
+    public Orientacao(TCC tcc, Professor professor, Aluno aluno, AreaEstudo area, String periodoTCC, Boolean statusAprovacao) {
+        this.tcc = tcc;
         this.professor = professor;
         this.aluno = aluno;
         this.area = area;
@@ -32,12 +33,12 @@ public class Orientacao {
         this.statusFinalizacao = false;
     }
 
-    public String getTheme() {
-        return theme;
+    public TCC getTcc() {
+        return tcc;
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
+    public void setTcc(TCC tcc) {
+        this.tcc = tcc;
     }
 
     public Professor getProfessor() {
@@ -56,11 +57,11 @@ public class Orientacao {
         this.aluno = aluno;
     }
 
-    public AreaEstudo getAreaInteresse() {
+    public AreaEstudo getArea() {
         return area;
     }
 
-    public void setAreaInteresse(AreaEstudo area) {
+    public void setArea(AreaEstudo area) {
         this.area = area;
     }
 
