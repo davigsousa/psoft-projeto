@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name = "Admin_User")
 @Table(name = "Admin_User")
-public class AdminUser {
+public class AdminUser implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
