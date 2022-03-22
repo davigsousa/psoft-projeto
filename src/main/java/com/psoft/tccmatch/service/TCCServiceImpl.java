@@ -50,4 +50,7 @@ public class TCCServiceImpl implements TCCService{
         TCC tcc = new TCC(dto.getTitulo(), dto.getDescricao(), dto.getStatus(), areas);
         return tccRepository.save(tcc);
     }
+
+    @Override
+    public List<TCC> getAll() { return tccRepository.findAll(); }
 }

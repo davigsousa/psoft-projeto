@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 public class TCCController {
@@ -24,5 +25,11 @@ public class TCCController {
     public ResponseEntity<?> criarTCC(@RequestBody TCCDTO tccDTO) throws ApiException {
         TCC result = tccService.criar(tccDTO);
         return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(path = "tcc/all", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll() {
+        List<TCC> response = tccService.getAll();
+        return ResponseEntity.ok(response);
     }
 }
