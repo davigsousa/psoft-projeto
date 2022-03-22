@@ -46,13 +46,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         Professor professor = new Professor(dto.getNome(), dto.getEmail(), labs, dto.getSenha(), dto.getMaxOrientandos());
         professorRepository.save(professor);
 
-        for (Laboratorio lab : labs) {
-            List<Professor> current_profs = lab.getProfessores();
-            current_profs.add(professor);
-            lab.setProfessores(current_profs);
-            laboratorioRepository.save(lab);
-        }
-
         return professor;
     }
 
@@ -92,14 +85,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         Professor professor = professor_existe.get();
-        List<Laboratorio> labs = professor.laboratoriosEntities();
-
-        for (Laboratorio lab : labs) {
-            List<Professor> profs = lab.getProfessores();
-            profs.remove(professor);
-            lab.setProfessores(profs);
-            laboratorioRepository.save(lab);
-        }
 
         professorRepository.delete(professor);
     }

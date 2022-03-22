@@ -10,7 +10,7 @@ public class Orientacao {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
     @OneToOne
-    private TCC tcc;
+    private PropostaTCC propostaTcc;
     @OneToOne()
     private Professor professor;
     @OneToOne()
@@ -23,8 +23,8 @@ public class Orientacao {
     
     public Orientacao() {}
 
-    public Orientacao(TCC tcc, Professor professor, Aluno aluno, AreaEstudo area, String periodoTCC, Boolean statusAprovacao) {
-        this.tcc = tcc;
+    public Orientacao(PropostaTCC propostaTcc, Professor professor, Aluno aluno, AreaEstudo area, String periodoTCC, Boolean statusAprovacao) {
+        this.propostaTcc = propostaTcc;
         this.professor = professor;
         this.aluno = aluno;
         this.area = area;
@@ -33,12 +33,12 @@ public class Orientacao {
         this.statusFinalizacao = false;
     }
 
-    public TCC getTcc() {
-        return tcc;
+    public PropostaTCC getTcc() {
+        return propostaTcc;
     }
 
-    public void setTcc(TCC tcc) {
-        this.tcc = tcc;
+    public void setTcc(PropostaTCC propostaTcc) {
+        this.propostaTcc = propostaTcc;
     }
 
     public Professor getProfessor() {
