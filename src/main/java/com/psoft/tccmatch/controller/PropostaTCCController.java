@@ -1,10 +1,9 @@
 package com.psoft.tccmatch.controller;
 
-import com.psoft.tccmatch.DTO.TCCDTO;
+import com.psoft.tccmatch.DTO.PropostaTCCDTO;
 import com.psoft.tccmatch.exception.ApiException;
-import com.psoft.tccmatch.model.TCC;
-import com.psoft.tccmatch.service.TCCService;
-import com.psoft.tccmatch.service.TCCServiceImpl;
+import com.psoft.tccmatch.model.PropostaTCC;
+import com.psoft.tccmatch.service.PropostaTCCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,20 +15,20 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
-public class TCCController {
+public class PropostaTCCController {
     @Autowired
-    private TCCService tccService;
+    private PropostaTCCService propostaTccService;
 
     @RequestMapping(path = "/tccs", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> criarTCC(@RequestBody TCCDTO tccDTO) throws ApiException {
-        TCC result = tccService.criar(tccDTO);
+    public ResponseEntity<?> criarTCC(@RequestBody PropostaTCCDTO tccDTO) throws ApiException {
+        PropostaTCC result = propostaTccService.criar(tccDTO);
         return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "tcc/all", method = RequestMethod.GET)
     public ResponseEntity<?> getAll() {
-        List<TCC> response = tccService.getAll();
+        List<PropostaTCC> response = propostaTccService.getAll();
         return ResponseEntity.ok(response);
     }
 }

@@ -4,21 +4,23 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class TCC {
+public class PropostaTCC {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
     private String titulo;
     private String descricao;
-    private Boolean status;
+    private String status;
+    @OneToOne()
+    private SolicitacaoOrientacao solicitacao;
     @OneToMany()
     private List<AreaEstudo> areasEstudo;
 
-    public TCC(){
+    public PropostaTCC(){
     }
 
-    public TCC(String titulo, String descricao, Boolean status, List<AreaEstudo> areasEstudo) {
+    public PropostaTCC(String titulo, String descricao, String status, List<AreaEstudo> areasEstudo) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
@@ -49,11 +51,11 @@ public class TCC {
         this.descricao = descricao;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -4,6 +4,7 @@ public class AlunoDTO {
     private String nome;
     private String email;
     private String matricula;
+    private String senha;
     private String periodo_de_conclusao;
 
 
@@ -21,5 +22,9 @@ public class AlunoDTO {
 
     public String getPeriodo_de_conclusao() {
         return periodo_de_conclusao;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 }

@@ -1,12 +1,11 @@
 package com.psoft.tccmatch.service;
 
-import com.psoft.tccmatch.DTO.TCCDTO;
+import com.psoft.tccmatch.DTO.PropostaTCCDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
-import com.psoft.tccmatch.model.Laboratorio;
-import com.psoft.tccmatch.model.TCC;
+import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
-import com.psoft.tccmatch.repository.TCCRepository;
+import com.psoft.tccmatch.repository.PropostaTCCRepository;
 import com.psoft.tccmatch.util.ErroAreaEstudo;
 import com.psoft.tccmatch.util.ErroTCC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +16,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TCCServiceImpl implements TCCService{
+public class PropostaTCCServiceImpl implements PropostaTCCService {
     @Autowired
-    private TCCRepository tccRepository;
+    private PropostaTCCRepository propostaTccRepository;
     @Autowired
     private AreaEstudoRepository areaEstudoRepository;
 
     @Override
-    public TCC criar(TCCDTO dto) throws ApiException {
-        Optional<TCC> tcc_existe = tccRepository.findByTitulo(dto.getTitulo());
+    public PropostaTCC criar(PropostaTCCDTO dto) throws ApiException {
+        Optional<PropostaTCC> tcc_existe = propostaTccRepository.findByTitulo(dto.getTitulo());
 
         if (tcc_existe.isPresent()) {
             throw ErroTCC.erroTCCJaExiste();
@@ -47,13 +46,13 @@ public class TCCServiceImpl implements TCCService{
             areas.add(area.get());
         }
 
-        TCC tcc = new TCC(dto.getTitulo(), dto.getDescricao(), dto.getStatus(), areas);
-        return tccRepository.save(tcc);
+        PropostaTCC propostaTcc = new PropostaTCC(dto.getTitulo(), dto.getDescricao(), dto.getStatus(), areas);
+        return propostaTccRepository.save(propostaTcc);
     }
 
     @Override
-    public TCC getById(Long id) throws ApiException {
-        Optional<TCC> tccOpt = tccRepository.findById(id);
+    public PropostaTCC getById(Long id) throws ApiException {
+        Optional<PropostaTCC> tccOpt = propostaTccRepository.findById(id);
 
         if(tccOpt.isEmpty()){
             throw ErroTCC.erroTCCNaoExiste();
@@ -62,5 +61,5 @@ public class TCCServiceImpl implements TCCService{
         return tccOpt.get();
     }
     
-    public List<TCC> getAll() { return tccRepository.findAll(); }
+    public List<PropostaTCC> getAll() { return propostaTccRepository.findAll(); }
 }

@@ -5,8 +5,7 @@ public class OrientacaoDTO {
     private Long idProfessor;
     private Long idAluno;
     private Long idAreaInteresse;
-    private String periodoTCC;
-    private Boolean statusAprovacao;
+    private String periodoInicio;
 
     public Long getIdThemeTCC() {
         return idThemeTCC;
@@ -24,11 +23,8 @@ public class OrientacaoDTO {
         return idAreaInteresse;
     }
 
-    public String getPeriodoTCC() {
-        return periodoTCC;
+    public String getPeriodoInicio() {
+        return periodoInicio;
     }
 
-    public Boolean getStatusAprovacao() {
-        return statusAprovacao;
-    }
 }

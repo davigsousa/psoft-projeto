@@ -26,7 +26,7 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     private AreaEstudoService areaEstudoService;
 
     @Autowired
-    private TCCService tccService;
+    private PropostaTCCService propostaTccService;
 
     @Override
     public Orientacao create(OrientacaoDTO dto) throws ApiException {
@@ -39,9 +39,9 @@ public class OrientacaoServiceImpl implements OrientacaoService {
         Professor professor = professorService.getById(dto.getIdProfessor());
         Aluno aluno = alunoService.getById(dto.getIdAluno());
         AreaEstudo areaEstudo = areaEstudoService.getById(dto.getIdAreaInteresse());
-        TCC tcc = tccService.getById(dto.getIdThemeTCC());
+        PropostaTCC propostaTcc = propostaTccService.getById(dto.getIdThemeTCC());
 
-        Orientacao orientacaoTCC = new Orientacao(tcc, professor, aluno, areaEstudo, dto.getPeriodoTCC(), dto.getStatusAprovacao());
+        Orientacao orientacaoTCC = new Orientacao(propostaTcc, professor, aluno, areaEstudo, dto.getPeriodoInicio());
         return orientacaoRepository.save(orientacaoTCC);
     }
 

@@ -12,16 +12,35 @@ public class Professor {
     private Long id;
     private String nome;
     private String email;
+    private String senha;
+    private int maxOrientandos;
+    @ManyToMany()
+    @JoinTable(
+            name = "professor_area_estudo",
+            joinColumns = @JoinColumn(name = "professor_id"),
+            inverseJoinColumns = @JoinColumn(name = "area_estudo_id")
+    )
+    private List<AreaEstudo> areasEstudo;
+    @OneToMany()
+    private List<SolicitacaoOrientacao> solicitacoes;
+    @OneToMany()
+    private List<PropostaTCC> propostas;
+    @OneToMany()
+    private List<Orientacao> orientacoes;
     @OneToMany()
     private List<Laboratorio> laboratorios;
+    @OneToMany()
+    private List<Reporte> reportes;
 
     public Professor() {
     }
 
-    public Professor(String nome, String email, List<Laboratorio> laboratorios) {
+    public Professor(String nome, String email, List<Laboratorio> laboratorios, String senha, int maxOrientandos) {
         this.nome = nome;
         this.email = email;
         this.laboratorios = laboratorios;
+        this.senha = senha;
+        this.maxOrientandos = maxOrientandos;
     }
 
     public Long getId() {
@@ -59,5 +78,61 @@ public class Professor {
 
     public void setLaboratorios(List<Laboratorio> laboratorios) {
         this.laboratorios = laboratorios;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public int getMaxOrientandos() {
+        return maxOrientandos;
+    }
+
+    public void setMaxOrientandos(int maxOrientandos) {
+        this.maxOrientandos = maxOrientandos;
+    }
+
+    public List<AreaEstudo> getAreasEstudo() {
+        return areasEstudo;
+    }
+
+    public void setAreasEstudo(List<AreaEstudo> areasEstudo) {
+        this.areasEstudo = areasEstudo;
+    }
+
+    public List<SolicitacaoOrientacao> getSolicitacoes() {
+        return solicitacoes;
+    }
+
+    public void setSolicitacoes(List<SolicitacaoOrientacao> solicitacoes) {
+        this.solicitacoes = solicitacoes;
+    }
+
+    public List<PropostaTCC> getPropostas() {
+        return propostas;
+    }
+
+    public void setPropostas(List<PropostaTCC> propostas) {
+        this.propostas = propostas;
+    }
+
+    public List<Orientacao> getOrientacoes() {
+        return orientacoes;
+    }
+
+    public void setOrientacoes(List<Orientacao> orientacoes) {
+        this.orientacoes = orientacoes;
+    }
+
+    public List<Reporte> getReportes() {
+        return reportes;
+    }
+
+    public void setReportes(List<Reporte> reportes) {
+        this.reportes = reportes;
     }
 }

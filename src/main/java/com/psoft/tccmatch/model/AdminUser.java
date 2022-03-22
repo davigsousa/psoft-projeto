@@ -9,9 +9,7 @@ public class AdminUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
-    private String nome;
     private String email;
-    private String cargo;
     private String senha;
 
     public Long getId() {
@@ -21,18 +19,9 @@ public class AdminUser {
     public AdminUser() {
     }
 
-    public AdminUser(String nome, String email, String senha) {
-        this.nome = nome;
+    public AdminUser(String email, String senha) {
         this.email = email;
         this.senha = senha;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getEmail() {
@@ -51,19 +40,4 @@ public class AdminUser {
         this.senha = senha;
     }
 
-    @Override
-    public String toString() {
-        return "AdminUser{" +
-                "nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
 }

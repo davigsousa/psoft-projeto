@@ -24,7 +24,7 @@ public class AlunoServiceImpl implements AlunoService {
             throw ErroAluno.erroAlunoJaExiste();
         }
 
-        Aluno aluno = new Aluno(dto.getNome(), dto.getMatricula(), dto.getEmail(), dto.getPeriodo_de_conclusao());
+        Aluno aluno = new Aluno(dto.getNome(), dto.getMatricula(), dto.getEmail(), dto.getSenha(), dto.getPeriodo_de_conclusao());
         return alunoRepository.save(aluno);
     }
 
@@ -33,9 +33,10 @@ public class AlunoServiceImpl implements AlunoService {
         Aluno aluno = get(dto.getMatricula());
 
         aluno.setEmail(dto.getEmail());
+        aluno.setSenha(dto.getSenha());
         aluno.setMatricula(dto.getMatricula());
         aluno.setNome(dto.getNome());
-        aluno.setPeriodo_de_conclusao(dto.getPeriodo_de_conclusao());
+        aluno.setPeriodoDeConclusao(dto.getPeriodo_de_conclusao());
 
         return alunoRepository.save(aluno);
     }
