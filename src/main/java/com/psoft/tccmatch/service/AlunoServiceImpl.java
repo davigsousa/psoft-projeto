@@ -52,6 +52,17 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
+    public Aluno getById(Long id) throws ApiException {
+        Optional<Aluno> alunoOpt = alunoRepository.findById(id);
+
+        if(alunoOpt.isEmpty()){
+            throw ErroAluno.erroAlunoNaoExiste();
+        }
+
+        return alunoOpt.get();
+    }
+
+    @Override
     public List<Aluno> getAll() {
         return alunoRepository.findAll();
     }

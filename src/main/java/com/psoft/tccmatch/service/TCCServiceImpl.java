@@ -52,5 +52,15 @@ public class TCCServiceImpl implements TCCService{
     }
 
     @Override
+    public TCC getById(Long id) throws ApiException {
+        Optional<TCC> tccOpt = tccRepository.findById(id);
+
+        if(tccOpt.isEmpty()){
+            throw ErroTCC.erroTCCNaoExiste();
+        }
+
+        return tccOpt.get();
+    }
+    
     public List<TCC> getAll() { return tccRepository.findAll(); }
 }

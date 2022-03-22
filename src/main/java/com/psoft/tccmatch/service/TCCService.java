@@ -10,5 +10,7 @@ import java.util.List;
 public interface TCCService {
     TCC criar(TCCDTO dto) throws ApiException;
 
+    TCC getById(Long id) throws ApiException;
+    
     List<TCC> getAll();
 }
