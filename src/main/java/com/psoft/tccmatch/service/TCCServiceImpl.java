@@ -50,4 +50,15 @@ public class TCCServiceImpl implements TCCService{
         TCC tcc = new TCC(dto.getTitulo(), dto.getDescricao(), dto.getStatus(), areas);
         return tccRepository.save(tcc);
     }
+
+    @Override
+    public TCC getById(Long id) throws ApiException {
+        Optional<TCC> tccOpt = tccRepository.findById(id);
+
+        if(tccOpt.isEmpty()){
+            throw ErroTCC.erroTCCNaoExiste();
+        }
+
+        return tccOpt.get();
+    }
 }

@@ -6,4 +6,6 @@ import com.psoft.tccmatch.model.TCC;
 
 public interface TCCService {
     TCC criar(TCCDTO dto) throws ApiException;
+
+    TCC getById(Long id) throws ApiException;
 }
