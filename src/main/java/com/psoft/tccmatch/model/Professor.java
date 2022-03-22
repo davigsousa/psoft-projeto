@@ -12,16 +12,20 @@ public class Professor {
     private Long id;
     private String nome;
     private String email;
+    private String senha;
+    private int maxOrientandos;
     @OneToMany()
     private List<Laboratorio> laboratorios;
 
     public Professor() {
     }
 
-    public Professor(String nome, String email, List<Laboratorio> laboratorios) {
+    public Professor(String nome, String email, List<Laboratorio> laboratorios, String senha, int maxOrientandos) {
         this.nome = nome;
         this.email = email;
         this.laboratorios = laboratorios;
+        this.senha = senha;
+        this.maxOrientandos = maxOrientandos;
     }
 
     public Long getId() {
@@ -59,5 +63,21 @@ public class Professor {
 
     public void setLaboratorios(List<Laboratorio> laboratorios) {
         this.laboratorios = laboratorios;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public int getMaxOrientandos() {
+        return maxOrientandos;
+    }
+
+    public void setMaxOrientandos(int maxOrientandos) {
+        this.maxOrientandos = maxOrientandos;
     }
 }
