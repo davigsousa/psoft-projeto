@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class AlunoController {
@@ -23,28 +24,30 @@ public class AlunoController {
     @Transactional
     public ResponseEntity<?> criarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.criar(alunoDTO);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
 
     @RequestMapping(path = "/alunos", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAlunos() {
         List<Aluno> result = alunoServiceImpl.getAll();
-        return ResponseEntity.ok(result);
+
+        List<AlunoDTO.RespostaApi> resultList = result.stream().map(AlunoDTO.RespostaApi::new).collect(Collectors.toList());
+        return ResponseEntity.ok(resultList);
     }
 
     @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAluno(@PathVariable("matricula") String matricula) throws ApiException {
         Aluno result = alunoServiceImpl.get(matricula);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
 
     @RequestMapping(path = "/alunos", method = RequestMethod.PUT)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> editarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.editar(alunoDTO);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
 
     @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.DELETE)
