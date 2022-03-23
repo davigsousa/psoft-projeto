@@ -9,6 +9,7 @@ import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.util.ErroLaboratorio;
 import com.psoft.tccmatch.util.ErroProfessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     private ProfessorRepository professorRepository;
     @Autowired
     private LaboratorioRepository laboratorioRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Professor cria(ProfessorDTO dto) throws ApiException {
@@ -43,7 +46,8 @@ public class ProfessorServiceImpl implements ProfessorService {
             }
         }
 
-        Professor professor = new Professor(dto.getNome(), dto.getEmail(), labs, dto.getSenha(), dto.getMaxOrientandos());
+        String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
+        Professor professor = new Professor(dto.getNome(), dto.getEmail(), labs, senhaCriptografada, dto.getMaxOrientandos());
         professorRepository.save(professor);
 
         return professor;
@@ -115,7 +119,8 @@ public class ProfessorServiceImpl implements ProfessorService {
         professor.setEmail(dto.getEmail());
         professor.setLaboratorios(labs);
         professor.setNome(dto.getNome());
-        professor.setSenha(dto.getSenha());
+        String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
+        professor.setSenha(senhaCriptografada);
         professor.setMaxOrientandos(dto.getMaxOrientandos());
         professorRepository.save(professor);
 

@@ -6,6 +6,7 @@ import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.repository.AlunoRepository;
 import com.psoft.tccmatch.util.ErroAluno;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class AlunoServiceImpl implements AlunoService {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public Aluno criar(AlunoDTO dto) throws ApiException {
         Optional<Aluno> aluno_existe = alunoRepository.findByMatricula(dto.getMatricula());
@@ -24,7 +28,8 @@ public class AlunoServiceImpl implements AlunoService {
             throw ErroAluno.erroAlunoJaExiste();
         }
 
-        Aluno aluno = new Aluno(dto.getNome(), dto.getMatricula(), dto.getEmail(), dto.getSenha(), dto.getPeriodo_de_conclusao());
+        String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
+        Aluno aluno = new Aluno(dto.getNome(), dto.getMatricula(), dto.getEmail(), senhaCriptografada, dto.getPeriodo_de_conclusao());
         return alunoRepository.save(aluno);
     }
 
@@ -33,7 +38,8 @@ public class AlunoServiceImpl implements AlunoService {
         Aluno aluno = get(dto.getMatricula());
 
         aluno.setEmail(dto.getEmail());
-        aluno.setSenha(dto.getSenha());
+        String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
+        aluno.setSenha(senhaCriptografada);
         aluno.setMatricula(dto.getMatricula());
         aluno.setNome(dto.getNome());
         aluno.setPeriodoDeConclusao(dto.getPeriodo_de_conclusao());

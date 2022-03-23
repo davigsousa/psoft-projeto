@@ -17,7 +17,7 @@ public class AlunoController {
     @Autowired
     private AlunoServiceImpl alunoServiceImpl;
 
-    @RequestMapping(path = "/aluno", method = RequestMethod.POST)
+    @RequestMapping(path = "/alunos", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<?> criarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.criar(alunoDTO);
