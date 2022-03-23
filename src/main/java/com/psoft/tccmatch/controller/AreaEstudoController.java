@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.controller;
 
+import com.psoft.tccmatch.DTO.AreaDeEstudoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.service.AreaEstudoService;
@@ -20,8 +21,8 @@ public class AreaEstudoController {
 
     @RequestMapping(path = "area-estudo/nova", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> create(@RequestBody String label) throws ApiException {
-        AreaEstudo response = areaEstudoService.create(label);
+    public ResponseEntity<?> create(@RequestBody AreaDeEstudoDTO dto) throws ApiException {
+        AreaEstudo response = areaEstudoService.create(dto.getAssunto());
         return ResponseEntity.ok(response);
     }
 
