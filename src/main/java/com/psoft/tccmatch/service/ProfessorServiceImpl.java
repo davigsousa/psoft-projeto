@@ -33,18 +33,7 @@ public class ProfessorServiceImpl implements ProfessorService {
             throw ErroProfessor.erroProfessorJaExiste();
         }
 
-        List<Long> id_labs = dto.getLaboratorios();
-        List<Laboratorio> labs = new ArrayList<>();
-
-        if (id_labs.size() > 0) {
-            for (Long lab_id : id_labs) {
-                Optional<Laboratorio> lab = laboratorioRepository.findById(lab_id);
-                if (lab.isEmpty()) {
-                    throw ErroLaboratorio.erroLabNaoExiste();
-                }
-                labs.add(lab.get());
-            }
-        }
+        List<Laboratorio> labs = geraLabs(dto.getLaboratorios());
 
         String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
         Professor professor = new Professor(dto.getNome(), dto.getEmail(), labs, senhaCriptografada);
@@ -103,7 +92,20 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         Professor professor = professor_existe.get();
 
-        List<Long> id_labs = dto.getLaboratorios();
+        List<Laboratorio> labs = geraLabs(dto.getLaboratorios());
+
+        professor.setEmail(dto.getEmail());
+        professor.setLaboratorios(labs);
+        professor.setNome(dto.getNome());
+        String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
+        professor.setSenha(senhaCriptografada);
+        int novoMaxOrientandos = dto.getMaxOrientandos().orElse(professor.getMaxOrientandos());
+        professor.setMaxOrientandos(novoMaxOrientandos);
+        professorRepository.save(professor);
+
+    }
+
+    private List<Laboratorio> geraLabs(List<Long> id_labs) throws ApiException {
         List<Laboratorio> labs = new ArrayList<>();
 
         if (id_labs.size() > 0) {
@@ -116,14 +118,6 @@ public class ProfessorServiceImpl implements ProfessorService {
             }
         }
 
-        professor.setEmail(dto.getEmail());
-        professor.setLaboratorios(labs);
-        professor.setNome(dto.getNome());
-        String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
-        professor.setSenha(senhaCriptografada);
-        int novoMaxOrientandos = dto.getMaxOrientandos().orElse(professor.getMaxOrientandos());
-        professor.setMaxOrientandos(novoMaxOrientandos);
-        professorRepository.save(professor);
-
+        return labs;
     }
 }
