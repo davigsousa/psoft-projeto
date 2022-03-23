@@ -1,12 +1,6 @@
 package com.psoft.tccmatch.service;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Optional;
-
-import com.psoft.tccmatch.model.AdminUser;
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.Professor;
 import com.psoft.tccmatch.model.User;
 import com.psoft.tccmatch.repository.AdminRepository;
 import com.psoft.tccmatch.repository.AlunoRepository;
