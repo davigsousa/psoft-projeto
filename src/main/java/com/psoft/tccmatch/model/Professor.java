@@ -35,12 +35,12 @@ public class Professor implements User {
     public Professor() {
     }
 
-    public Professor(String nome, String email, List<Laboratorio> laboratorios, String senha, int maxOrientandos) {
+    public Professor(String nome, String email, List<Laboratorio> laboratorios, String senha) {
         this.nome = nome;
         this.email = email;
         this.laboratorios = laboratorios;
         this.senha = senha;
-        this.maxOrientandos = maxOrientandos;
+        this.maxOrientandos = 0;
     }
 
     public Long getId() {

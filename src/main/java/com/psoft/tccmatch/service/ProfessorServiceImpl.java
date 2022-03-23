@@ -47,7 +47,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
-        Professor professor = new Professor(dto.getNome(), dto.getEmail(), labs, senhaCriptografada, dto.getMaxOrientandos());
+        Professor professor = new Professor(dto.getNome(), dto.getEmail(), labs, senhaCriptografada);
         professorRepository.save(professor);
 
         return professor;
@@ -121,7 +121,8 @@ public class ProfessorServiceImpl implements ProfessorService {
         professor.setNome(dto.getNome());
         String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
         professor.setSenha(senhaCriptografada);
-        professor.setMaxOrientandos(dto.getMaxOrientandos());
+        int novoMaxOrientandos = dto.getMaxOrientandos().orElse(professor.getMaxOrientandos());
+        professor.setMaxOrientandos(novoMaxOrientandos);
         professorRepository.save(professor);
 
     }

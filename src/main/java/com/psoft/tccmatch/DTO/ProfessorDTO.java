@@ -9,13 +9,13 @@ public class ProfessorDTO {
     private String email;
     private List<Long> laboratorios;
     private String senha;
-    private int maxOrientandos;
+    private Optional<Integer> maxOrientandos;
 
     public String getSenha() {
         return senha;
     }
 
-    public int getMaxOrientandos() {
+    public Optional<Integer> getMaxOrientandos() {
         return maxOrientandos;
     }
 
