@@ -22,7 +22,7 @@ public class ProfessorController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> cria(@RequestBody ProfessorDTO dto) throws ApiException {
         Professor response = professorService.cria(dto);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(response));
     }
 
     @RequestMapping(path = "professor/{id}", method = RequestMethod.GET)
