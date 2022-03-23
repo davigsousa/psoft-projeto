@@ -40,7 +40,7 @@ public class LoginController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 
     private void authenticate(String username, String password) throws Exception {
@@ -53,19 +53,19 @@ public class LoginController {
         }
     }
 
-//    private static class JwtResponse {
-//        private final String token;
-//
-//        JwtResponse(String token) {
-//            this.token = token;
-//        }
-//
-//        public String getToken() {
-//            return token;
-//        }
-//
-//        public String getMessage() {
-//            return "Usuário autenticado com sucesso!";
-//        }
-//    }
+    private static class JwtResponse {
+        private final String token;
+
+        JwtResponse(String token) {
+            this.token = token;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public String getMessage() {
+            return "Usuário autenticado com sucesso!";
+        }
+    }
 }
