@@ -9,14 +9,9 @@ public class ProfessorDTO {
     private String email;
     private List<Long> laboratorios;
     private String senha;
-    private int maxOrientandos;
 
     public String getSenha() {
         return senha;
-    }
-
-    public int getMaxOrientandos() {
-        return maxOrientandos;
     }
 
     public String getNome() {
