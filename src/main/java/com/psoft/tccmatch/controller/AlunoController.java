@@ -27,12 +27,14 @@ public class AlunoController {
     }
 
     @RequestMapping(path = "/alunos", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAlunos() {
         List<Aluno> result = alunoServiceImpl.getAll();
         return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAluno(@PathVariable("matricula") String matricula) throws ApiException {
         Aluno result = alunoServiceImpl.get(matricula);
         return ResponseEntity.ok(result);
