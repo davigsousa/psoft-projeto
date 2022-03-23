@@ -7,6 +7,7 @@ import com.psoft.tccmatch.service.AlunoServiceImpl;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -18,6 +19,7 @@ public class AlunoController {
     private AlunoServiceImpl alunoServiceImpl;
 
     @RequestMapping(path = "/alunos", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ResponseEntity<?> criarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.criar(alunoDTO);
@@ -37,12 +39,14 @@ public class AlunoController {
     }
 
     @RequestMapping(path = "/alunos", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> editarAluno(@RequestBody AlunoDTO alunoDTO) throws ApiException {
         Aluno result = alunoServiceImpl.editar(alunoDTO);
         return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "/alunos/{matricula}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deletarAluno(@PathVariable("matricula") String matricula) throws ApiException {
         alunoServiceImpl.remover(matricula);
         return (ResponseEntity<?>) ResponseEntity.status(204);
