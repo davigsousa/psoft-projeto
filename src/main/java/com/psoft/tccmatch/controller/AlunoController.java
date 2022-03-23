@@ -56,4 +56,18 @@ public class AlunoController {
         alunoService.remover(matricula);
         return (ResponseEntity<?>) ResponseEntity.status(204);
     }
+
+    @RequestMapping(path = "/alunos/{matricula}/area-estudo/{areaId}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ALUNO')")
+    public ResponseEntity<?> selecionarAreaEstudo(@PathVariable("matricula") String matricula, @PathVariable("areaId") Long areaId) throws ApiException {
+        Aluno result = alunoService.selecionarArea(matricula, areaId);
+        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
+    }
+
+    @RequestMapping(path = "/alunos/{matricula}/area-estudo/{areaId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('ALUNO')")
+    public ResponseEntity<?> desselecionarAreaEstudo(@PathVariable("matricula") String matricula, @PathVariable("areaId") Long areaId) throws ApiException {
+        Aluno result = alunoService.desselecionarArea(matricula, areaId);
+        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
+    }
 }
