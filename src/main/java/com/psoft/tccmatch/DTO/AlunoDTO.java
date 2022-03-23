@@ -1,9 +1,7 @@
 package com.psoft.tccmatch.DTO;
 
-
 import com.psoft.tccmatch.model.Aluno;
 
-import java.util.List;
 
 public class AlunoDTO {
     private String nome;
