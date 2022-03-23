@@ -18,4 +18,8 @@ public interface AlunoService {
     List<Aluno> getAll();
 
     void remover(String matricula) throws ApiException;
+
+    Aluno selecionarArea(String matricula, Long areaID) throws ApiException;
+
+    Aluno desselecionarArea(String matricula, Long areaID) throws ApiException;
 }

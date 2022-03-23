@@ -93,6 +93,14 @@ public class Aluno implements User {
         this.areasEstudo = areasEstudo;
     }
 
+    public void adicionarAreaEstudo(AreaEstudo area) {
+        this.areasEstudo.add(area);
+    }
+
+    public void removerAreaEstudo(AreaEstudo area) {
+        this.areasEstudo.remove(area);
+    }
+
     public List<Reporte> getReportes() {
         return reportes;
     }
