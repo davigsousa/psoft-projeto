@@ -54,6 +54,9 @@ public class JwtUserDetailsService implements UserDetailsService {
         if (user instanceof Professor || user instanceof AdminUser) {
             permissoes.add("PROFESSOR");
         }
+        if (user instanceof AdminUser) {
+            permissoes.add("ADMIN");
+        }
 
         List<GrantedAuthority> grantedAuthorities = permissoes.stream()
                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
