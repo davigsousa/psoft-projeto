@@ -7,6 +7,7 @@ import com.psoft.tccmatch.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class ProfessorController {
     private ProfessorService professorService;
 
     @RequestMapping(path = "professor/novo", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> cria(@RequestBody ProfessorDTO dto) throws ApiException {
         Professor response = professorService.cria(dto);
         return ResponseEntity.ok(response);
@@ -37,6 +39,7 @@ public class ProfessorController {
     }
 
     @RequestMapping(path = "professor/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable("id") String id) throws ApiException {
         Long parsedId = Long.parseLong(id);
         professorService.delete(parsedId);
@@ -44,6 +47,7 @@ public class ProfessorController {
     }
 
     @RequestMapping(path = "professor/edit", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> update(@RequestBody ProfessorDTO dto) throws ApiException {
         professorService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
