@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "aluno")
-public class Aluno {
+public class Aluno implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)

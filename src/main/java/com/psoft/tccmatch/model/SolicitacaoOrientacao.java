@@ -15,6 +15,8 @@ public class SolicitacaoOrientacao {
     @ManyToOne()
     private Professor professor;
 
+    public SolicitacaoOrientacao() {}
+
     public SolicitacaoOrientacao(String resposta, Boolean isAprovado, String solicitante) {
         this.resposta = resposta;
         this.isAprovado = isAprovado;

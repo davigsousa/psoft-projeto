@@ -6,6 +6,7 @@ import com.psoft.tccmatch.model.Orientacao;
 import com.psoft.tccmatch.service.OrientacaoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ public class OrientacaoController {
     private OrientacaoServiceImpl orientacaoServiceImpl;
 
     @RequestMapping(path = "/orientacao", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> create(@RequestBody OrientacaoDTO orientacaoDTO) throws ApiException {
         Orientacao date = orientacaoServiceImpl.create(orientacaoDTO);
 
