@@ -22,9 +22,12 @@ public class AlunoServiceImpl implements AlunoService {
 
     @Override
     public Aluno criar(AlunoDTO dto) throws ApiException {
-        Optional<Aluno> aluno_existe = alunoRepository.findByMatricula(dto.getMatricula());
-
-        if (aluno_existe.isPresent()) {
+        Optional<Aluno> alunoExiste = alunoRepository.findByMatricula(dto.getMatricula());
+        if (alunoExiste.isPresent()) {
+            throw ErroAluno.erroAlunoJaExiste();
+        }
+        alunoExiste = alunoRepository.findByEmail(dto.getEmail());
+        if (alunoExiste.isPresent()) {
             throw ErroAluno.erroAlunoJaExiste();
         }
 
