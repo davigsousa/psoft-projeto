@@ -26,6 +26,7 @@ public class ProfessorController {
     }
 
     @RequestMapping(path = "professor/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getById(@PathVariable("id") String id) throws ApiException {
         Long parsedId = Long.parseLong(id);
         Professor response = professorService.getById(parsedId);
@@ -33,6 +34,7 @@ public class ProfessorController {
     }
 
     @RequestMapping(path = "professor/all", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAll() {
         List<Professor> response = professorService.getAll();
         return ResponseEntity.ok(response);
