@@ -34,7 +34,7 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     private AlunoRepository alunoRepository;
 
     @Override
-    public PropostaTCC criar(PropostaTCCDTO dto) throws ApiException {
+    public PropostaTCC criar(PropostaTCCDTO dto, Object user) throws ApiException {
         Optional<PropostaTCC> tcc_existe = propostaTccRepository.findByTitulo(dto.getTitulo());
 
         if (tcc_existe.isPresent()) {
@@ -57,33 +57,27 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
             areas.add(area.get());
         }
 
-//        Alterar para buscar pelo id vindo do token de login
-        Optional<Professor> professor_opt = professorRepository.findById(Long.parseLong("1"));
-
-        if (professor_opt.isPresent()) {
+        if (user instanceof Professor) {
             PropostaTCC propostaTcc = new PropostaTCC(
                     dto.getTitulo(),
                     dto.getDescricao(),
                     dto.getStatus(),
                     areas,
-                    professor_opt.get()
+                    (Professor) user
             );
             return propostaTccRepository.save(propostaTcc);
-        } else {
-            Optional<Aluno> aluno_opt = alunoRepository.findById(Long.parseLong("1"));
-            if (aluno_opt.isPresent()) {
+        } else if (user instanceof Aluno) {
                 PropostaTCC propostaTcc = new PropostaTCC(
                         dto.getTitulo(),
                         dto.getDescricao(),
                         dto.getStatus(),
                         areas,
-                        aluno_opt.get()
+                        (Aluno) user
                 );
                 return propostaTccRepository.save(propostaTcc);
             } else {
                 throw ErroProposta.erroProposta();
             }
-        }
     }
 
     @Override

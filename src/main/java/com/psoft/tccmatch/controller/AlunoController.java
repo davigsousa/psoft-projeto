@@ -1,8 +1,11 @@
 package com.psoft.tccmatch.controller;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
+import com.psoft.tccmatch.DTO.OrientacaoDTO;
+import com.psoft.tccmatch.DTO.SolicitacaoOrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.service.AlunoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +72,15 @@ public class AlunoController {
     public ResponseEntity<?> desselecionarAreaEstudo(@PathVariable("matricula") String matricula, @PathVariable("areaId") Long areaId) throws ApiException {
         Aluno result = alunoService.desselecionarArea(matricula, areaId);
         return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
+    }
+
+    @RequestMapping(path = "/aluno/orientacao", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ALUNO')")
+    public ResponseEntity<?> solicitarOrientacao(
+            @RequestBody OrientacaoDTO dto,
+            @RequestAttribute("user") Object user
+    ) throws ApiException {
+        SolicitacaoOrientacao response = alunoService.solicitaOrientacao(dto, user);
+        return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPIAluno(response));
     }
 }

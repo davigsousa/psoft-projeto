@@ -7,12 +7,11 @@ import com.psoft.tccmatch.service.PropostaTCCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -22,10 +21,10 @@ public class PropostaTCCController {
 
     @RequestMapping(path = "/tccs", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
-    @Transactional
-    public ResponseEntity<?> criarTCC(@RequestBody PropostaTCCDTO tccDTO) throws ApiException {
-        PropostaTCC result = propostaTccService.criar(tccDTO);
-        return ResponseEntity.ok(result);
+    @Transactional(propagation = Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    public ResponseEntity<?> criarTCC(@RequestBody PropostaTCCDTO tccDTO, @RequestAttribute("user") Object user) throws ApiException {
+        PropostaTCC result = propostaTccService.criar(tccDTO, user);
+        return ResponseEntity.ok(new PropostaTCCDTO.RespostaAPI(result));
     }
 
     @RequestMapping(path = "tcc/all", method = RequestMethod.GET)
@@ -36,7 +35,7 @@ public class PropostaTCCController {
     }
 
     @RequestMapping(path = "tcc/all-professor", method = RequestMethod.GET)
-    @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
+    @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAllByProfessores() {
         List<PropostaTCC> response = propostaTccService.getAllFromProf();
         return ResponseEntity.ok(response);

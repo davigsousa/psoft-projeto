@@ -22,7 +22,7 @@ public class AreaEstudoController {
     @RequestMapping(path = "area-estudo/nova", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody AreaDeEstudoDTO dto) throws ApiException {
-        AreaEstudo response = areaEstudoService.create(dto.getAssunto());
+        AreaEstudo response = areaEstudoService.create(dto);
         return ResponseEntity.ok(response);
     }
 
