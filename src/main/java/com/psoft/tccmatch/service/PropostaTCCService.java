@@ -7,7 +7,7 @@ import com.psoft.tccmatch.model.PropostaTCC;
 import java.util.List;
 
 public interface PropostaTCCService {
-    PropostaTCC criar(PropostaTCCDTO dto) throws ApiException;
+    PropostaTCC criar(PropostaTCCDTO dto, Object user) throws ApiException;
 
     PropostaTCC getById(Long id) throws ApiException;
     
