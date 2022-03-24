@@ -1,5 +1,11 @@
 package com.psoft.tccmatch.DTO;
 
+import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.AreaEstudo;
+
+import java.util.List;
+
+
 public class AlunoDTO {
     private String nome;
     private String email;
@@ -26,5 +32,21 @@ public class AlunoDTO {
 
     public String getSenha() {
         return senha;
+    }
+
+    public static class RespostaApi {
+        public String nome;
+        public String email;
+        public String matricula;
+        public String periodo_de_conclusao;
+        public List<AreaEstudo> areasEstudo;
+
+        public RespostaApi(Aluno aluno) {
+            this.nome = aluno.getNome();
+            this.email = aluno.getEmail();
+            this.matricula = aluno.getMatricula();
+            this.periodo_de_conclusao = aluno.getPeriodoDeConclusao();
+            this.areasEstudo = aluno.getAreasEstudo();
+        }
     }
 }

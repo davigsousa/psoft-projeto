@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.service;
 
+import com.psoft.tccmatch.DTO.AreaDeEstudoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
@@ -34,12 +35,12 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     }
 
     @Override
-    public AreaEstudo create(String assunto) throws ApiException {
-        Optional<AreaEstudo> area_opt = areaEstudoRepository.findByAssunto(assunto);
+    public AreaEstudo create(AreaDeEstudoDTO dto) throws ApiException {
+        Optional<AreaEstudo> area_opt = areaEstudoRepository.findByAssunto(dto.getAssunto());
         if (area_opt.isPresent()) {
             throw ErroAreaEstudo.erroAreaJaExiste();
         }
-        AreaEstudo area_estudo = new AreaEstudo(assunto);
+        AreaEstudo area_estudo = new AreaEstudo(dto.getAssunto());
         areaEstudoRepository.save(area_estudo);
         return area_estudo;
     }

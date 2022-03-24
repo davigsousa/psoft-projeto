@@ -4,6 +4,7 @@ import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.repository.AlunoRepository;
@@ -31,6 +32,9 @@ public class AlunoServiceImpl implements AlunoService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private AreaEstudoService areaEstudoService;
 
     @Override
     public Aluno criar(AlunoDTO dto) throws ApiException {
@@ -115,5 +119,23 @@ public class AlunoServiceImpl implements AlunoService {
         } else {
             throw ErroProposta.erroProposta();
         }
+    }
+
+    @Override
+    public Aluno selecionarArea(String matricula, Long areaId) throws ApiException {
+        Aluno aluno = this.get(matricula);
+        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
+
+        aluno.adicionarAreaEstudo(areaEstudo);
+        return alunoRepository.save(aluno);
+    }
+
+    @Override
+    public Aluno desselecionarArea(String matricula, Long areaId) throws ApiException {
+        Aluno aluno = this.get(matricula);
+        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
+
+        aluno.removerAreaEstudo(areaEstudo);
+        return alunoRepository.save(aluno);
     }
 }
