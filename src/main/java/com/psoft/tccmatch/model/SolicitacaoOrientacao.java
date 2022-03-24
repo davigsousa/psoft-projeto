@@ -14,13 +14,27 @@ public class SolicitacaoOrientacao {
     private String solicitante;
     @ManyToOne()
     private Professor professor;
+    @OneToOne
+    private PropostaTCC proposta;
+    @OneToOne
+    private Aluno aluno;
 
     public SolicitacaoOrientacao() {}
 
-    public SolicitacaoOrientacao(String resposta, Boolean isAprovado, String solicitante) {
-        this.resposta = resposta;
-        this.isAprovado = isAprovado;
-        this.solicitante = solicitante;
+    public SolicitacaoOrientacao(PropostaTCC proposta, Professor professor, Aluno aluno) {
+        this.proposta = proposta;
+        this.isAprovado = false;
+        this.solicitante = "PROFESSOR";
+        this.professor = professor;
+        this.aluno = aluno;
+    }
+
+    public SolicitacaoOrientacao(PropostaTCC proposta, Aluno aluno) {
+        this.proposta = proposta;
+        this.isAprovado = false;
+        this.solicitante = "ALUNO";
+        this.aluno = aluno;
+        this.professor = proposta.getProfessor();
     }
 
     public Long getId() {
@@ -43,11 +57,27 @@ public class SolicitacaoOrientacao {
         isAprovado = aprovado;
     }
 
-    public String getSolicitante() {
-        return solicitante;
+    public PropostaTCC getProposta() {
+        return proposta;
     }
 
-    public void setSolicitante(String solicitante) {
-        this.solicitante = solicitante;
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public void setProposta(PropostaTCC proposta) {
+        this.proposta = proposta;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 }
