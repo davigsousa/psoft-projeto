@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProfessorController {
@@ -22,7 +22,7 @@ public class ProfessorController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> cria(@RequestBody ProfessorDTO dto) throws ApiException {
         Professor response = professorService.cria(dto);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(response));
     }
 
     @RequestMapping(path = "professor/{id}", method = RequestMethod.GET)
@@ -30,14 +30,16 @@ public class ProfessorController {
     public ResponseEntity<?> getById(@PathVariable("id") String id) throws ApiException {
         Long parsedId = Long.parseLong(id);
         Professor response = professorService.getById(parsedId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(response));
     }
 
     @RequestMapping(path = "professor/all", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAll() {
         List<Professor> response = professorService.getAll();
-        return ResponseEntity.ok(response);
+
+        List<ProfessorDTO.RespostaApi> resultList = response.stream().map(ProfessorDTO.RespostaApi::new).collect(Collectors.toList());
+        return ResponseEntity.ok(resultList);
     }
 
     @RequestMapping(path = "professor/{id}", method = RequestMethod.DELETE)
