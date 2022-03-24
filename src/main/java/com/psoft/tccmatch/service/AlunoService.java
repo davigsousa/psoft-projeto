@@ -1,8 +1,10 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
+import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 
 import java.util.List;
 
@@ -18,4 +20,6 @@ public interface AlunoService {
     List<Aluno> getAll();
 
     void remover(String matricula) throws ApiException;
+
+    SolicitacaoOrientacao solicitaOrientacao(OrientacaoDTO dto, Object user) throws ApiException;
 }

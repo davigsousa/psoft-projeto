@@ -1,14 +1,18 @@
 package com.psoft.tccmatch.controller;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
+import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.service.AlunoServiceImpl;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -51,6 +55,16 @@ public class AlunoController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deletarAluno(@PathVariable("matricula") String matricula) throws ApiException {
         alunoServiceImpl.remover(matricula);
-        return (ResponseEntity<?>) ResponseEntity.status(204);
+        return (ResponseEntity<?>) ResponseEntity.status(200);
+    }
+
+    @RequestMapping(path = "/aluno/orientacao", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ALUNO')")
+    public ResponseEntity<?> solicitarOrientacao(
+            @RequestBody OrientacaoDTO dto,
+            @RequestAttribute("user_id") Object user
+    ) throws ApiException {
+        SolicitacaoOrientacao response = alunoServiceImpl.solicitaOrientacao(dto, user);
+        return ResponseEntity.status(201).body(response);
     }
 }

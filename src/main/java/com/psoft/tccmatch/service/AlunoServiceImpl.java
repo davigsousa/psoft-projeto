@@ -1,10 +1,16 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
+import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.PropostaTCC;
+import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.repository.AlunoRepository;
+import com.psoft.tccmatch.repository.OrientacaoRepository;
+import com.psoft.tccmatch.repository.SolicitacaoOrientacaoRepository;
 import com.psoft.tccmatch.util.ErroAluno;
+import com.psoft.tccmatch.util.ErroProposta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +22,12 @@ import java.util.Optional;
 public class AlunoServiceImpl implements AlunoService {
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private PropostaTCCService propostaTCCService;
+
+    @Autowired
+    private SolicitacaoOrientacaoRepository solicitacaoOrientacaoRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -81,5 +93,27 @@ public class AlunoServiceImpl implements AlunoService {
     public void remover(String matricula) throws ApiException {
         Aluno aluno = get(matricula);
         alunoRepository.delete(aluno);
+    }
+
+    @Override
+    public SolicitacaoOrientacao solicitaOrientacao(OrientacaoDTO dto, Object user) throws ApiException {
+        if (user instanceof Aluno) {
+            List<PropostaTCC> propostas_disponiveis = propostaTCCService.getAllFromProf();
+            PropostaTCC proposta = propostaTCCService.getById(dto.getIdThemeTCC());
+
+            if (!propostas_disponiveis.contains(proposta)) {
+                throw ErroProposta.erroPropostaNaoDisponivel();
+            }
+
+            SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(
+                    proposta,
+                    (Aluno) user
+            );
+
+            solicitacaoOrientacaoRepository.save(solicitacao);
+            return solicitacao;
+        } else {
+            throw ErroProposta.erroProposta();
+        }
     }
 }
