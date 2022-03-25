@@ -53,13 +53,31 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+
+                Object user = new Object();
+                Optional<AdminUser> admin = adminRepository.findByEmail(username);
+                if (admin.isEmpty()) {
+                    Optional<Aluno> aluno = alunoRepository.findByEmail(username);
+                    if (aluno.isEmpty()) {
+                        Optional<Professor> professor = professorRepository.findByEmail(username);
+                        if (professor.isEmpty()) {
+                            System.out.println("Usuário não encontrado.");
+                        } else {
+                            user = professor.get();
+                        }
+                    } else {
+                        user = aluno.get();
+                    }
+                } else {
+                    user = admin.get();
+                }
+
+                request.setAttribute("user", user);
             } catch (IllegalArgumentException e) {
                 System.out.println("Indisponível para obter token");
             } catch (ExpiredJwtException e) {
                 System.out.println("Token expirou");
             }
-        } else {
-            logger.warn("JWT Token não inicia com Bearer String");
         }
 
         // Once we get the token validate it.
@@ -76,26 +94,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
-        Object user = new Object();
 
-        Optional<AdminUser> admin = adminRepository.findByEmail(username);
-        if (admin.isEmpty()) {
-            Optional<Aluno> aluno = alunoRepository.findByEmail(username);
-            if (aluno.isEmpty()) {
-                Optional<Professor> professor = professorRepository.findByEmail(username);
-                if (professor.isEmpty()) {
-                    System.out.println("Usuário não encontrado.");
-                } else {
-                    user = professor.get();
-                }
-            } else {
-                user = aluno.get();
-            }
-        } else {
-            user = admin.get();
-        }
-
-        request.setAttribute("user", user);
         chain.doFilter(request, response);
     }
 

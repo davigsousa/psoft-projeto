@@ -2,6 +2,8 @@ package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.exception.ApiException;
+import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.model.Laboratorio;
 import com.psoft.tccmatch.model.Professor;
 import com.psoft.tccmatch.repository.LaboratorioRepository;
@@ -24,6 +26,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     private LaboratorioRepository laboratorioRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private AreaEstudoService areaEstudoService;
 
     @Override
     public Professor cria(ProfessorDTO dto) throws ApiException {
@@ -119,5 +123,23 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         return labs;
+    }
+
+    @Override
+    public Professor selecionarArea(Long profID, Long areaId) throws ApiException {
+        Professor professor = this.getById(profID);
+        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
+
+        professor.adicionarAreaEstudo(areaEstudo);
+        return professorRepository.save(professor);
+    }
+
+    @Override
+    public Professor desselecionarArea(Long profID, Long areaId) throws ApiException {
+        Professor professor = this.getById(profID);
+        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
+
+        professor.removerAreaEstudo(areaEstudo);
+        return professorRepository.save(professor);
     }
 }
