@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.controller;
 
+import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Professor;
@@ -55,5 +56,19 @@ public class ProfessorController {
     public ResponseEntity<?> update(@RequestBody ProfessorDTO dto) throws ApiException {
         professorService.update(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @RequestMapping(path = "/professores/{profId}/area-estudo/{areaId}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('PROFESSOR')")
+    public ResponseEntity<?> selecionarAreaEstudo(@PathVariable("profId") Long profId, @PathVariable("areaId") Long areaId) throws ApiException {
+        Professor result = professorService.selecionarArea(profId, areaId);
+        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(result));
+    }
+
+    @RequestMapping(path = "/professores/{profId}/area-estudo/{areaId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('PROFESSOR')")
+    public ResponseEntity<?> desselecionarAreaEstudo(@PathVariable("profId") Long profId, @PathVariable("areaId") Long areaId) throws ApiException {
+        Professor result = professorService.desselecionarArea(profId, areaId);
+        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(result));
     }
 }
