@@ -38,4 +38,11 @@ public class AreaEstudo {
     public void setAssunto(String assunto) {
         this.assunto = assunto;
     }
+
+    @Override
+    public String toString() {
+        return "AreaEstudo{" +
+                "assunto='" + assunto + '\'' +
+                '}';
+    }
 }
