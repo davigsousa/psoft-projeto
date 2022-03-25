@@ -104,6 +104,14 @@ public class Professor implements User {
         this.areasEstudo = areasEstudo;
     }
 
+    public void adicionarAreaEstudo(AreaEstudo area) {
+        this.areasEstudo.add(area);
+    }
+
+    public void removerAreaEstudo(AreaEstudo area) {
+        this.areasEstudo.remove(area);
+    }
+
     public List<SolicitacaoOrientacao> getSolicitacoes() {
         return solicitacoes;
     }
