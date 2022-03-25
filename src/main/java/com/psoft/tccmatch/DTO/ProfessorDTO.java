@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.DTO;
 
+import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.model.Professor;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class ProfessorDTO {
         final public String email;
         final public List<String> laboratorios;
         final public int maxOrientandos;
+        public List<AreaEstudo> areasEstudo;
 
         public RespostaApi(Professor professor) {
             this.id = professor.getId();
@@ -50,6 +52,7 @@ public class ProfessorDTO {
             this.email = professor.getEmail();
             this.laboratorios = professor.getLaboratorios();
             this.maxOrientandos = professor.getMaxOrientandos();
+            this.areasEstudo = professor.getAreasEstudo();
         }
     }
 }
