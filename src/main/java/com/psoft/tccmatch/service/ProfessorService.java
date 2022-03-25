@@ -18,4 +18,8 @@ public interface ProfessorService {
     void delete(Long id) throws ApiException;
 
     void update(ProfessorDTO dto) throws ApiException;
+
+    Professor selecionarArea(Long profId, Long areaID) throws ApiException;
+
+    Professor desselecionarArea(Long profId, Long areaID) throws ApiException;
 }
