@@ -2,10 +2,7 @@ package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.exception.ApiException;
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.AreaEstudo;
-import com.psoft.tccmatch.model.Laboratorio;
-import com.psoft.tccmatch.model.Professor;
+import com.psoft.tccmatch.model.*;
 import com.psoft.tccmatch.repository.LaboratorioRepository;
 import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.util.ErroLaboratorio;
@@ -28,6 +25,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private AreaEstudoService areaEstudoService;
+    @Autowired
+    private OrientacaoService orientacaoService;
 
     @Override
     public Professor cria(ProfessorDTO dto) throws ApiException {
@@ -107,6 +106,24 @@ public class ProfessorServiceImpl implements ProfessorService {
         professor.setMaxOrientandos(novoMaxOrientandos);
         professorRepository.save(professor);
 
+    }
+
+    @Override
+    public void atualizarQuota(int novaQuantidade, Long professorId) throws ApiException {
+        Professor professor = getById(professorId);
+
+        boolean disponibilidade;
+        if (novaQuantidade > professor.getMaxOrientandos()) {
+            disponibilidade = true;
+        } else {
+            List<Orientacao> orientacoes = orientacaoService.getAllActive(professor);
+            disponibilidade = orientacoes.size() < novaQuantidade;
+        }
+
+        professor.setMaxOrientandos(novaQuantidade);
+        professor.setDisponivel(disponibilidade);
+
+        professorRepository.saveAndFlush(professor);
     }
 
     private List<Laboratorio> geraLabs(List<Long> id_labs) throws ApiException {

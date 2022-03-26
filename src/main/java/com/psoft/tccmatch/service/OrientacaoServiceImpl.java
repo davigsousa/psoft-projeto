@@ -38,10 +38,9 @@ public class OrientacaoServiceImpl implements OrientacaoService {
 
         Professor professor = professorService.getById(dto.getIdProfessor());
         Aluno aluno = alunoService.getById(dto.getIdAluno());
-        AreaEstudo areaEstudo = areaEstudoService.getById(dto.getIdAreaInteresse());
         PropostaTCC propostaTcc = propostaTccService.getById(dto.getIdPropostaTCC());
 
-        Orientacao orientacaoTCC = new Orientacao(propostaTcc, professor, aluno, areaEstudo, dto.getPeriodoInicio());
+        Orientacao orientacaoTCC = new Orientacao(propostaTcc, professor, aluno, dto.getPeriodoInicio());
         return orientacaoRepository.saveAndFlush(orientacaoTCC);
     }
 
@@ -57,8 +56,13 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     }
 
     @Override
-    public List<Orientacao> getAll() {
+    public List<Orientacao> getAllActive() {
         return null;
+    }
+
+    @Override
+    public List<Orientacao> getAllActive(Professor professor) {
+        return orientacaoRepository.findAllByProfessorIdAndPeriodoFimNull(professor.getId());
     }
 
     @Override

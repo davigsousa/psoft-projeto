@@ -20,7 +20,7 @@ public class PropostaTCC {
     @OneToOne()
     private SolicitacaoOrientacao solicitacao;
     @ManyToMany
-    private Set<AreaEstudo> areasEstudo = new HashSet<>();
+    private final Set<AreaEstudo> areasEstudo = new HashSet<>();
 
     public PropostaTCC(){
     }

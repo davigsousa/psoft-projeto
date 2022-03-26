@@ -58,6 +58,13 @@ public class ProfessorController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @RequestMapping(path = "/professor/quota/{novaQuantidade}", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('PROFESSOR')")
+    public ResponseEntity<?> atualizarQuota(@PathVariable("novaQuantidade") int novaQuantidade, @RequestAttribute("user") Object user) throws ApiException {
+        professorService.atualizarQuota(novaQuantidade, ((Professor) user).getId());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @RequestMapping(path = "/professor/area-estudo/{areaId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('PROFESSOR')")
     public ResponseEntity<?> selecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {

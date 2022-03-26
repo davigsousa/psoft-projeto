@@ -19,6 +19,8 @@ public interface ProfessorService {
 
     void update(ProfessorDTO dto) throws ApiException;
 
+    void atualizarQuota(int novaQuantidade, Long professorId) throws ApiException;
+
     Professor selecionarArea(Long profId, Long areaID) throws ApiException;
 
     Professor desselecionarArea(Long profId, Long areaID) throws ApiException;

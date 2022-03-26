@@ -4,7 +4,6 @@ public class OrientacaoDTO {
     private Long idPropostaTCC;
     private Long idProfessor;
     private Long idAluno;
-    private Long idAreaInteresse;
     private String periodoInicio;
 
     public Long getIdPropostaTCC() {
@@ -17,10 +16,6 @@ public class OrientacaoDTO {
 
     public Long getIdAluno() {
         return idAluno;
-    }
-
-    public Long getIdAreaInteresse() {
-        return idAreaInteresse;
     }
 
     public String getPeriodoInicio() {
