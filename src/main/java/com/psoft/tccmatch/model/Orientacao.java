@@ -18,19 +18,16 @@ public class Orientacao {
     private Professor professor;
     @OneToOne()
     private Aluno aluno;
-    @OneToOne()
-    private AreaEstudo area;
     @OneToMany
     private Set<Reporte> reportes;
 
 
     public Orientacao() {}
 
-    public Orientacao(PropostaTCC propostaTcc, Professor professor, Aluno aluno, AreaEstudo area, String periodoInicio) {
+    public Orientacao(PropostaTCC propostaTcc, Professor professor, Aluno aluno, String periodoInicio) {
         this.propostaTcc = propostaTcc;
         this.professor = professor;
         this.aluno = aluno;
-        this.area = area;
         this.periodoInicio = periodoInicio;
         this.periodoFim = null;
     }
@@ -57,14 +54,6 @@ public class Orientacao {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
-    }
-
-    public AreaEstudo getArea() {
-        return area;
-    }
-
-    public void setArea(AreaEstudo area) {
-        this.area = area;
     }
 
     public String getPeriodoInicio() {
