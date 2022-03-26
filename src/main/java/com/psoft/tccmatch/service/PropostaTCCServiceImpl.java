@@ -13,6 +13,7 @@ import com.psoft.tccmatch.repository.PropostaTCCRepository;
 import com.psoft.tccmatch.util.ErroAreaEstudo;
 import com.psoft.tccmatch.util.ErroProposta;
 import com.psoft.tccmatch.util.ErroTCC;
+import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,10 +82,25 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         return tccOpt.get();
     }
     
-    public List<PropostaTCC> getAll() { return propostaTccRepository.findAll(); }
+    public List<PropostaTCC> getAll(Object user) throws ApiException {
+        if (user instanceof Aluno) {
+            Aluno aluno = (Aluno) user;
+            return getAllFromAluno();
+        } else if (user instanceof Professor) {
+            Professor professor = (Professor) user;
+            return getAllFromProf();
+        } else {
+            throw ErroUser.erroTipoUsuario();
+        }
+    }
 
     @Override
     public List<PropostaTCC> getAllFromProf() {
         return propostaTccRepository.findCriadoByProfessor();
+    }
+
+    @Override
+    public List<PropostaTCC> getAllFromAluno() {
+        return propostaTccRepository.findCriadoByAluno();
     }
 }

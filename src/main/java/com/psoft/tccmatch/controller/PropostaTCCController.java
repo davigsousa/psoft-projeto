@@ -30,8 +30,8 @@ public class PropostaTCCController {
 
     @RequestMapping(path = "tcc/all", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
-    public ResponseEntity<?> getAll() {
-        List<PropostaTCC> response = propostaTccService.getAll();
+    public ResponseEntity<?> getAll(@RequestAttribute("user") Object user) throws ApiException {
+        List<PropostaTCC> response = propostaTccService.getAll(user);
         return ResponseEntity.ok(response);
     }
 

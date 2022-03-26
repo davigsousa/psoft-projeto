@@ -11,6 +11,9 @@ import java.util.Optional;
 public interface PropostaTCCRepository extends JpaRepository<PropostaTCC, Long> {
     Optional<PropostaTCC> findByTitulo(String titulo);
 
-    @Query("SELECT p FROM PropostaTCC p JOIN p.professor WHERE p.professor IS NOT NULL")
+    @Query("SELECT p FROM PropostaTCC p WHERE p.aluno IS NULL")
     List<PropostaTCC> findCriadoByProfessor();
+
+    @Query("SELECT p FROM PropostaTCC p WHERE p.professor IS NULL")
+    List<PropostaTCC> findCriadoByAluno();
 }
