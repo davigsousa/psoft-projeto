@@ -7,11 +7,14 @@ import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.repository.SolicitacaoOrientacaoRepository;
 import com.psoft.tccmatch.util.ErroProposta;
+import com.psoft.tccmatch.util.ErroSolicitacao;
 import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoService {
@@ -68,6 +71,60 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             );
         } else {
             throw ErroUser.erroSemSolicitacoes();
+        }
+    }
+
+    @Override
+    public SolicitacaoOrientacao findById(Long id) throws ApiException {
+        Optional<SolicitacaoOrientacao> solicitacao = solicitacaoOrientacaoRepository.findById(id);
+
+        if (solicitacao.isEmpty()) {
+            throw ErroSolicitacao.erroSolicitacaoNaoExiste();
+        }
+
+        return solicitacao.get();
+    }
+
+
+    @Override
+    public void aprovarSolicitacao(String mensagem, Long idSolicitacao, Object user) throws ApiException {
+        SolicitacaoOrientacao solicitacao = findById(idSolicitacao);
+
+        verificarSePodeResponder(solicitacao, user);
+
+        solicitacao.setAprovado(true);
+        solicitacao.setResposta(mensagem);
+
+        solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
+    }
+
+    @Override
+    public void rejeitarSolicitacao(String mensagem, Long idSolicitacao, Object user) throws ApiException {
+        SolicitacaoOrientacao solicitacao = findById(idSolicitacao);
+
+        verificarSePodeResponder(solicitacao, user);
+
+        solicitacao.setAprovado(false);
+        solicitacao.setResposta(mensagem);
+
+        solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
+    }
+
+    private void verificarSePodeResponder(SolicitacaoOrientacao solicitacao, Object user) throws ApiException {
+        if (user instanceof Aluno) {
+            Long userId = ((Aluno) user).getId();
+            if (!solicitacao.getSolicitante().equals("PROFESSOR") ||
+                    !solicitacao.getAluno().getId().equals(userId)) {
+                throw ErroSolicitacao.erroSolicitacaoNaoExiste();
+            }
+        } else if (user instanceof Professor) {
+            Long userId = ((Professor) user).getId();
+            if (!solicitacao.getSolicitante().equals("ALUNO") ||
+                    !solicitacao.getProfessor().getId().equals(userId)) {
+                throw ErroSolicitacao.erroSolicitacaoNaoExiste();
+            }
+        } else {
+            throw ErroUser.erroTipoUsuario();
         }
     }
 }
