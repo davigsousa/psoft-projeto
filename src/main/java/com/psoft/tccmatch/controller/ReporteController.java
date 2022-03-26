@@ -16,7 +16,7 @@ public class ReporteController {
 
 
     @RequestMapping(path = "report/{orientacaoId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ALUNO')")
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> reportaOrientacao(
             @RequestAttribute(value = "user") Object user,
             @PathVariable("orientacaoId") Long orientacao_id,
@@ -24,5 +24,12 @@ public class ReporteController {
     ) throws ApiException {
         Reporte reporte = reporteService.cria(user, orientacao_id, dto);
         return ResponseEntity.ok(new ReporteDTO.RespostaAPI(reporte));
+    }
+
+    @RequestMapping(path = "reports", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> buscaReportesPorData(@RequestParam("periodo") String periodo) {
+        ReporteDTO.RespostaApiLista reportes = reporteService.buscaPorPeriodo(periodo);
+        return ResponseEntity.ok(reportes);
     }
 }
