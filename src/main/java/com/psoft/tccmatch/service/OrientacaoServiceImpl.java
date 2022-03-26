@@ -30,7 +30,7 @@ public class OrientacaoServiceImpl implements OrientacaoService {
 
     @Override
     public Orientacao create(OrientacaoDTO dto) throws ApiException {
-        Optional<Orientacao> orientacao_existe = orientacaoRepository.findById(dto.getIdThemeTCC());
+        Optional<Orientacao> orientacao_existe = orientacaoRepository.findById(dto.getIdPropostaTCC());
 
         if (orientacao_existe.isPresent()) {
             throw ErroOrientacao.erroOrientacaoJaExiste();
@@ -39,10 +39,10 @@ public class OrientacaoServiceImpl implements OrientacaoService {
         Professor professor = professorService.getById(dto.getIdProfessor());
         Aluno aluno = alunoService.getById(dto.getIdAluno());
         AreaEstudo areaEstudo = areaEstudoService.getById(dto.getIdAreaInteresse());
-        PropostaTCC propostaTcc = propostaTccService.getById(dto.getIdThemeTCC());
+        PropostaTCC propostaTcc = propostaTccService.getById(dto.getIdPropostaTCC());
 
         Orientacao orientacaoTCC = new Orientacao(propostaTcc, professor, aluno, areaEstudo, dto.getPeriodoInicio());
-        return orientacaoRepository.save(orientacaoTCC);
+        return orientacaoRepository.saveAndFlush(orientacaoTCC);
     }
 
     @Override
