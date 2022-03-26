@@ -19,12 +19,7 @@ public class PropostaTCC {
     private Professor professor;
     @OneToOne()
     private SolicitacaoOrientacao solicitacao;
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "areas_proposta",
-            joinColumns = @JoinColumn(name = "proposta_id"),
-            inverseJoinColumns = @JoinColumn(name = "area_estudo_id")
-    )
+    @ManyToMany
     private Set<AreaEstudo> areasEstudo = new HashSet<>();
 
     public PropostaTCC(){
