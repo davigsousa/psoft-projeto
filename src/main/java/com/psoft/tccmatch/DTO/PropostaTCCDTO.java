@@ -5,19 +5,20 @@ import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class PropostaTCCDTO {
     private String titulo;
     private String descricao;
-    private String status;
+    private Optional<String> status;
     private List<Long> areasEstudo;
 
     public String getTitulo() { return titulo; }
 
     public String getDescricao() { return descricao; }
 
-    public String getStatus() { return status; }
+    public Optional<String> getStatus() { return status; }
 
     public List<Long> getAreasEstudo() { return areasEstudo; }
 

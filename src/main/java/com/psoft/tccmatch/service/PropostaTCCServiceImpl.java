@@ -46,7 +46,7 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         PropostaTCC propostaTcc = new PropostaTCC(
                 dto.getTitulo(),
                 dto.getDescricao(),
-                dto.getStatus()
+                dto.getStatus().orElse(null)
         );
 
         if (user instanceof Professor) {
