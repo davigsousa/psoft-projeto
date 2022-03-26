@@ -1,13 +1,10 @@
 package com.psoft.tccmatch.controller;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
-import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.DTO.ProfessorDTO;
-import com.psoft.tccmatch.DTO.SolicitacaoOrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.model.Professor;
-import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -76,16 +73,6 @@ public class AlunoController {
         Aluno aluno = (Aluno) user;
         Aluno result = alunoService.desselecionarArea(aluno.getMatricula(), areaId);
         return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
-    }
-
-    @RequestMapping(path = "/aluno/orientacao", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> solicitarOrientacao(
-            @RequestBody OrientacaoDTO dto,
-            @RequestAttribute("user") Object user
-    ) throws ApiException {
-        SolicitacaoOrientacao response = alunoService.solicitaOrientacao(dto, user);
-        return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPIAluno(response));
     }
 
     @RequestMapping(path = "aluno/professores-disponiveis", method = RequestMethod.GET)

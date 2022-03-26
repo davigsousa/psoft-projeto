@@ -21,12 +21,12 @@ public class SolicitacaoOrientacao {
 
     public SolicitacaoOrientacao() {}
 
-    public SolicitacaoOrientacao(PropostaTCC proposta, Professor professor, Aluno aluno) {
+    public SolicitacaoOrientacao(PropostaTCC proposta, Professor professor) {
         this.proposta = proposta;
         this.isAprovado = false;
         this.solicitante = "PROFESSOR";
         this.professor = professor;
-        this.aluno = aluno;
+        this.aluno = proposta.getAluno();
     }
 
     public SolicitacaoOrientacao(PropostaTCC proposta, Aluno aluno) {
@@ -72,6 +72,8 @@ public class SolicitacaoOrientacao {
     public void setProposta(PropostaTCC proposta) {
         this.proposta = proposta;
     }
+
+    public String getSolicitante() { return solicitante; };
 
     public Aluno getAluno() {
         return aluno;
