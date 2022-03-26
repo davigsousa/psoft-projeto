@@ -45,17 +45,6 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     }
 
     @Override
-    public Orientacao update(OrientacaoDTO dto) throws ApiException {
-        return null;
-    }
-
-    @Override
-    public Orientacao get(String tema) throws ApiException {
-        //apenas com orientação True
-        return null;
-    }
-
-    @Override
     public List<Orientacao> getAllActive() {
         return null;
     }
@@ -71,7 +60,20 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     }
 
     @Override
-    public void remove(String tema) throws ApiException {
+    public OrientacaoDTO.RespostaApiLista getAllByPeriodo(String periodo) {
+        List<Orientacao> emCurso = getAllEmCurso();
+        List<Orientacao> finalizadas = getAllByPeriodoFinalizadas(periodo);
 
+        return new OrientacaoDTO.RespostaApiLista(emCurso, finalizadas);
+    }
+
+    @Override
+    public List<Orientacao> getAllEmCurso() {
+        return orientacaoRepository.findAllByPeriodoFimIsNull();
+    }
+
+    @Override
+    public List<Orientacao> getAllByPeriodoFinalizadas(String periodo) {
+        return orientacaoRepository.findAllByPeriodoFim(periodo);
     }
 }
