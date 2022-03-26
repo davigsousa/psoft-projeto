@@ -58,17 +58,19 @@ public class ProfessorController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @RequestMapping(path = "/professores/{profId}/area-estudo/{areaId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/professor/area-estudo/{areaId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('PROFESSOR')")
-    public ResponseEntity<?> selecionarAreaEstudo(@PathVariable("profId") Long profId, @PathVariable("areaId") Long areaId) throws ApiException {
-        Professor result = professorService.selecionarArea(profId, areaId);
+    public ResponseEntity<?> selecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
+        Professor professor = (Professor) user;
+        Professor result = professorService.selecionarArea(professor.getId(), areaId);
         return ResponseEntity.ok(new ProfessorDTO.RespostaApi(result));
     }
 
-    @RequestMapping(path = "/professores/{profId}/area-estudo/{areaId}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/professor/area-estudo/{areaId}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('PROFESSOR')")
-    public ResponseEntity<?> desselecionarAreaEstudo(@PathVariable("profId") Long profId, @PathVariable("areaId") Long areaId) throws ApiException {
-        Professor result = professorService.desselecionarArea(profId, areaId);
+    public ResponseEntity<?> desselecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
+        Professor professor = (Professor) user;
+        Professor result = professorService.desselecionarArea(professor.getId(), areaId);
         return ResponseEntity.ok(new ProfessorDTO.RespostaApi(result));
     }
 }
