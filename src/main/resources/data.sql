@@ -14,8 +14,8 @@ values(1, 'admin@email.com', '$2a$10$nnYH.BGaHeidn7EufsgKg.MXJ2zQiUKIVdiR89SRNwH
 insert into Aluno (ID, NOME, EMAIL, MATRICULA, SENHA, PERIODO_DE_CONCLUSAO)
 values(1, 'Luiz', 'luiz@mail.com', '119210052', '$2a$10$nnYH.BGaHeidn7EufsgKg.MXJ2zQiUKIVdiR89SRNwHg9u0FmsGyy', '2024.2');
 
-insert into Professor (ID, NOME, EMAIL, SENHA, MAX_ORIENTANDOS)
-values(1, 'Luiz Prof', 'luiz@prof.com', '$2a$10$nnYH.BGaHeidn7EufsgKg.MXJ2zQiUKIVdiR89SRNwHg9u0FmsGyy', 2);
+insert into Professor (ID, NOME, EMAIL, SENHA, MAX_ORIENTANDOS, DISPONIVEL)
+values(1, 'Luiz Prof', 'luiz@prof.com', '$2a$10$nnYH.BGaHeidn7EufsgKg.MXJ2zQiUKIVdiR89SRNwHg9u0FmsGyy', 2, 1);
 
 /* A senha é 123456 */
 insert into aluno (ID, NOME, MATRICULA, EMAIL, SENHA, PERIODO_DE_CONCLUSAO)

@@ -14,6 +14,7 @@ public class Professor implements User {
     private String email;
     private String senha;
     private int maxOrientandos;
+    private boolean disponivel;
     @ManyToMany()
     @JoinTable(
             name = "professor_area_estudo",
@@ -41,6 +42,7 @@ public class Professor implements User {
         this.laboratorios = laboratorios;
         this.senha = senha;
         this.maxOrientandos = 0;
+        this.disponivel = false;
     }
 
     public Long getId() {
@@ -150,5 +152,13 @@ public class Professor implements User {
                 "nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 }
