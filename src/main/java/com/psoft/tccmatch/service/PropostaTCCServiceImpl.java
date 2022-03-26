@@ -85,10 +85,10 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     public List<PropostaTCC> getAll(Object user) throws ApiException {
         if (user instanceof Aluno) {
             Aluno aluno = (Aluno) user;
-            return getAllFromAluno();
+            return propostaTccRepository.findAllByAlunoId(aluno.getId());
         } else if (user instanceof Professor) {
             Professor professor = (Professor) user;
-            return getAllFromProf();
+            return propostaTccRepository.findAllByProfessorId(professor.getId());
         } else {
             throw ErroUser.erroTipoUsuario();
         }
