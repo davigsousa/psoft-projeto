@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface OrientacaoRepository extends JpaRepository<Orientacao, Long> {
     List<Orientacao> findAllByProfessorIdAndPeriodoFimNull(Long id);
+    List<Orientacao> findAllByProfessorId(Long id);
 }
