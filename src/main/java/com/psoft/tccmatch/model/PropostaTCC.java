@@ -1,7 +1,8 @@
 package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class PropostaTCC {
@@ -18,27 +19,23 @@ public class PropostaTCC {
     private Professor professor;
     @OneToOne()
     private SolicitacaoOrientacao solicitacao;
-    @OneToMany()
-    private List<AreaEstudo> areasEstudo;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "areas_proposta",
+            joinColumns = @JoinColumn(name = "proposta_id"),
+            inverseJoinColumns = @JoinColumn(name = "area_estudo_id")
+    )
+    private Set<AreaEstudo> areasEstudo = new HashSet<>();
 
     public PropostaTCC(){
     }
 
-    public PropostaTCC(String titulo, String descricao, String status, List<AreaEstudo> areasEstudo, Aluno aluno) {
+    public PropostaTCC(String titulo, String descricao, String status) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
-        this.areasEstudo = areasEstudo;
-        this.aluno = aluno;
     }
 
-    public PropostaTCC(String titulo, String descricao, String status, List<AreaEstudo> areasEstudo, Professor professor) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.status = status;
-        this.areasEstudo = areasEstudo;
-        this.professor = professor;
-    }
 
     public Long getId() {
         return id;
@@ -72,12 +69,20 @@ public class PropostaTCC {
         this.status = status;
     }
 
-    public List<AreaEstudo> getAreasEstudo() {
+    public Set<AreaEstudo> getAreasEstudo() {
         return areasEstudo;
     }
 
-    public void setAreasEstudo(List<AreaEstudo> areasEstudo) {
-        this.areasEstudo = areasEstudo;
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public void setSolicitacao(SolicitacaoOrientacao solicitacao) {
+        this.solicitacao = solicitacao;
     }
 
     public Aluno getAluno() {
@@ -90,5 +95,9 @@ public class PropostaTCC {
 
     public SolicitacaoOrientacao getSolicitacao() {
         return solicitacao;
+    }
+
+    public void addAreaEstudo(AreaEstudo area) {
+        this.areasEstudo.add(area);
     }
 }

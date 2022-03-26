@@ -14,13 +14,9 @@ import com.psoft.tccmatch.util.ErroAreaEstudo;
 import com.psoft.tccmatch.util.ErroProposta;
 import com.psoft.tccmatch.util.ErroTCC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PropostaTCCServiceImpl implements PropostaTCCService {
@@ -42,42 +38,36 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         }
 
         List<Long> id_areas = dto.getAreasEstudo();
-        List<AreaEstudo> areas = new ArrayList<>();
 
         if (id_areas.size() == 0) {
             throw ErroTCC.erroTCCDeveTerAreaDeEstudo();
         }
 
+        PropostaTCC propostaTcc = new PropostaTCC(
+                dto.getTitulo(),
+                dto.getDescricao(),
+                dto.getStatus()
+        );
+
+        if (user instanceof Professor) {
+            propostaTcc.setProfessor((Professor) user);
+        } else if (user instanceof Aluno) {
+            propostaTcc.setAluno((Aluno) user);
+        } else {
+                throw ErroProposta.erroProposta();
+        }
+        PropostaTCC proposta_criada = propostaTccRepository.save(propostaTcc);
 
         for (Long area_id : id_areas) {
             Optional<AreaEstudo> area = areaEstudoRepository.findById(area_id);
             if (area.isEmpty()) {
                 throw ErroAreaEstudo.erroAreaNaoExiste();
             }
-            areas.add(area.get());
+            AreaEstudo area_estudo = area.get();
+            proposta_criada.addAreaEstudo(area_estudo);
         }
 
-        if (user instanceof Professor) {
-            PropostaTCC propostaTcc = new PropostaTCC(
-                    dto.getTitulo(),
-                    dto.getDescricao(),
-                    dto.getStatus(),
-                    areas,
-                    (Professor) user
-            );
-            return propostaTccRepository.save(propostaTcc);
-        } else if (user instanceof Aluno) {
-                PropostaTCC propostaTcc = new PropostaTCC(
-                        dto.getTitulo(),
-                        dto.getDescricao(),
-                        dto.getStatus(),
-                        areas,
-                        (Aluno) user
-                );
-                return propostaTccRepository.save(propostaTcc);
-            } else {
-                throw ErroProposta.erroProposta();
-            }
+        return propostaTccRepository.save(proposta_criada);
     }
 
     @Override
