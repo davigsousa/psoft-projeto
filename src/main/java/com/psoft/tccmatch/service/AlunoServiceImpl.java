@@ -100,28 +100,6 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public SolicitacaoOrientacao solicitaOrientacao(Long idProposta, Object user) throws ApiException {
-        if (user instanceof Aluno) {
-            List<PropostaTCC> propostas_disponiveis = propostaTCCService.getAllFromProf();
-            PropostaTCC proposta = propostaTCCService.getById(idProposta);
-
-            if (!propostas_disponiveis.contains(proposta)) {
-                throw ErroProposta.erroPropostaNaoDisponivel();
-            }
-
-            SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(
-                    proposta,
-                    (Aluno) user
-            );
-
-            solicitacaoOrientacaoRepository.save(solicitacao);
-            return solicitacao;
-        } else {
-            throw ErroProposta.erroProposta();
-        }
-    }
-
-    @Override
     public Aluno selecionarArea(String matricula, Long areaId) throws ApiException {
         Aluno aluno = this.get(matricula);
         AreaEstudo areaEstudo = areaEstudoService.getById(areaId);

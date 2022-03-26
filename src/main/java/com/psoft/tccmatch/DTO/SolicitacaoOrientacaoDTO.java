@@ -16,7 +16,12 @@ public class SolicitacaoOrientacaoDTO {
             this.isAprovado = solicitacao.getAprovado();
             this.professor = solicitacao.getProfessor().getEmail();
             this.proposta = solicitacao.getProposta().getTitulo();
-            this.solicitante = solicitacao.getAluno().toString();
+
+            if (solicitacao.getSolicitante().equals("PROFESSOR")) {
+                this.solicitante = solicitacao.getProfessor().toString();
+            } else {
+                this.solicitante = solicitacao.getAluno().toString();
+            }
         }
     }
 }

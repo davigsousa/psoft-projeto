@@ -21,7 +21,7 @@ public interface AlunoService {
 
     void remover(String matricula) throws ApiException;
 
-    SolicitacaoOrientacao solicitaOrientacao(Long idPropostaTCC, Object user) throws ApiException;
+
 
     Aluno selecionarArea(String matricula, Long areaID) throws ApiException;
 

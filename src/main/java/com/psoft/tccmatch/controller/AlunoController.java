@@ -73,14 +73,4 @@ public class AlunoController {
         Aluno result = alunoService.desselecionarArea(matricula, areaId);
         return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
-
-    @RequestMapping(path = "/aluno/solicitar/{idOrientacao}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> solicitarOrientacao(
-            @PathVariable("idOrientacao") Long idOrientacao,
-            @RequestAttribute("user") Object user
-    ) throws ApiException {
-        SolicitacaoOrientacao response = alunoService.solicitaOrientacao(idOrientacao, user);
-        return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPIAluno(response));
-    }
 }
