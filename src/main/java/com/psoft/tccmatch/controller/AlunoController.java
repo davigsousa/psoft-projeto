@@ -2,18 +2,20 @@ package com.psoft.tccmatch.controller;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.DTO.OrientacaoDTO;
+import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.DTO.SolicitacaoOrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.Professor;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.service.AlunoService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,17 +62,19 @@ public class AlunoController {
         return (ResponseEntity<?>) ResponseEntity.status(204);
     }
 
-    @RequestMapping(path = "/alunos/{matricula}/area-estudo/{areaId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/aluno/area-estudo/{areaId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> selecionarAreaEstudo(@PathVariable("matricula") String matricula, @PathVariable("areaId") Long areaId) throws ApiException {
-        Aluno result = alunoService.selecionarArea(matricula, areaId);
+    public ResponseEntity<?> selecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
+        Aluno aluno = (Aluno) user;
+        Aluno result = alunoService.selecionarArea(aluno.getMatricula(), areaId);
         return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
 
-    @RequestMapping(path = "/alunos/{matricula}/area-estudo/{areaId}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/aluno/area-estudo/{areaId}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> desselecionarAreaEstudo(@PathVariable("matricula") String matricula, @PathVariable("areaId") Long areaId) throws ApiException {
-        Aluno result = alunoService.desselecionarArea(matricula, areaId);
+    public ResponseEntity<?> desselecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
+        Aluno aluno = (Aluno) user;
+        Aluno result = alunoService.desselecionarArea(aluno.getMatricula(), areaId);
         return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
 
@@ -82,5 +86,17 @@ public class AlunoController {
     ) throws ApiException {
         SolicitacaoOrientacao response = alunoService.solicitaOrientacao(dto, user);
         return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPIAluno(response));
+    }
+
+    @RequestMapping(path = "aluno/professores-disponiveis", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ALUNO')")
+    public ResponseEntity<?> getProfessoresDisponiveis(@RequestAttribute(value = "user") Object user) throws ApiException {
+        Aluno aluno = (Aluno) user;
+        List<Professor> professores = alunoService.getProfessoresDisp(aluno.getMatricula());
+        List<ProfessorDTO.RespostaApi> response = new ArrayList<>();
+        for (Professor professor : professores) {
+            response.add(new ProfessorDTO.RespostaApi(professor));
+        }
+        return ResponseEntity.ok(response);
     }
 }
