@@ -18,5 +18,7 @@ public interface OrientacaoService {
 
     List<Orientacao> getAllActive(Professor professor);
 
+    List<Orientacao> getAllByProfessor(Professor professor);
+
     void remove(String tema) throws ApiException;
 }

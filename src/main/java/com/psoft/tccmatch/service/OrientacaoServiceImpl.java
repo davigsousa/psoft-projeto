@@ -66,6 +66,11 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     }
 
     @Override
+    public List<Orientacao> getAllByProfessor(Professor professor) {
+        return orientacaoRepository.findAllByProfessorId(professor.getId());
+    }
+
+    @Override
     public void remove(String tema) throws ApiException {
 
     }
