@@ -143,4 +143,12 @@ public class Professor implements User {
     public void setReportes(List<Reporte> reportes) {
         this.reportes = reportes;
     }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
