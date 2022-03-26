@@ -4,6 +4,7 @@ import com.psoft.tccmatch.DTO.AlunoDTO;
 import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.Professor;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface AlunoService {
     Aluno selecionarArea(String matricula, Long areaID) throws ApiException;
 
     Aluno desselecionarArea(String matricula, Long areaID) throws ApiException;
+
+    List<Professor> getProfessoresDisp(String matricula) throws ApiException;
 }
