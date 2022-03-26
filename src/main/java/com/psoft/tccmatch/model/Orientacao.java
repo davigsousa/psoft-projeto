@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -9,6 +10,8 @@ public class Orientacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
+    private String periodoInicio;
+    private String periodoFim;
     @OneToOne
     private PropostaTCC propostaTcc;
     @OneToOne()
@@ -17,8 +20,9 @@ public class Orientacao {
     private Aluno aluno;
     @OneToOne()
     private AreaEstudo area;
-    private String periodoInicio;
-    private String periodoFim;
+    @OneToMany
+    private Set<Reporte> reportes;
+
 
     public Orientacao() {}
 
@@ -79,4 +83,19 @@ public class Orientacao {
         this.periodoFim = periodoFim;
     }
 
+    public PropostaTCC getPropostaTcc() {
+        return propostaTcc;
+    }
+
+    public void setPropostaTcc(PropostaTCC propostaTcc) {
+        this.propostaTcc = propostaTcc;
+    }
+
+    public Set<Reporte> getReportes() {
+        return reportes;
+    }
+
+    public void setReportes(Set<Reporte> reportes) {
+        this.reportes = reportes;
+    }
 }
