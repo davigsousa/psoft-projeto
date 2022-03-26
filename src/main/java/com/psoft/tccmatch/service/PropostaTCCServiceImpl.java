@@ -56,7 +56,7 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         } else {
                 throw ErroProposta.erroProposta();
         }
-        PropostaTCC proposta_criada = propostaTccRepository.save(propostaTcc);
+        PropostaTCC proposta_criada = propostaTccRepository.saveAndFlush(propostaTcc);
 
         for (Long area_id : id_areas) {
             Optional<AreaEstudo> area = areaEstudoRepository.findById(area_id);
@@ -67,7 +67,7 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
             proposta_criada.addAreaEstudo(area_estudo);
         }
 
-        return propostaTccRepository.save(proposta_criada);
+        return propostaTccRepository.saveAndFlush(proposta_criada);
     }
 
     @Override
