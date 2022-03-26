@@ -10,18 +10,20 @@ public class Reporte {
     private Long id;
     private String periodo;
     private String problema;
-    private String usuario;
+    @OneToOne
+    private Aluno aluno;
+    @OneToOne
+    private Professor professor;
     @ManyToOne
     private Orientacao orientacao;
 
     public Reporte() {
     }
 
-    public Reporte(String periodo, String problema, Orientacao orientacao, String usuario) {
+    public Reporte(String periodo, String problema, Orientacao orientacao) {
         this.periodo = periodo;
         this.problema = problema;
         this.orientacao = orientacao;
-        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -52,11 +54,19 @@ public class Reporte {
         this.orientacao = orientacao;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public Aluno getAluno() {
+        return aluno;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 }
