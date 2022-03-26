@@ -1,14 +1,14 @@
 package com.psoft.tccmatch.DTO;
 
 public class OrientacaoDTO {
-    private Long idThemeTCC;
+    private Long idPropostaTCC;
     private Long idProfessor;
     private Long idAluno;
     private Long idAreaInteresse;
     private String periodoInicio;
 
-    public Long getIdThemeTCC() {
-        return idThemeTCC;
+    public Long getIdPropostaTCC() {
+        return idPropostaTCC;
     }
 
     public Long getIdProfessor() {
