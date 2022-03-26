@@ -10,5 +10,9 @@ public interface ReporteService {
 
     Reporte cria(Object user, Long orientacao_id, ReporteDTO dto) throws ApiException;
 
-    List<Reporte> list();
+    List<Reporte> buscaPorPeriodoAluno(String periodo);
+
+    List<Reporte> buscaPorPeriodoProfessor(String periodo);
+
+    ReporteDTO.RespostaApiLista buscaPorPeriodo(String periodo);
 }
