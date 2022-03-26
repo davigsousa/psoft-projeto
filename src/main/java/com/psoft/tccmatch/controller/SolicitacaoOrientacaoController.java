@@ -33,4 +33,36 @@ public class SolicitacaoOrientacaoController {
         return ResponseEntity.status(200).body(solicitacoes);
     }
 
+    @RequestMapping(path = "/solicitacoes/aprovacoes", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
+    public ResponseEntity<?> aprovarSolicitacao(
+            @RequestBody RespostaSolicitacaoDTO dto,
+            @RequestAttribute("user") Object user
+    ) throws ApiException {
+        solicitacaoOrientacaoService.aprovarSolicitacao(dto.getMensagem(), dto.getIdSolicitacao(), user);
+        return ResponseEntity.status(204).build();
+    }
+
+    @RequestMapping(path = "/solicitacoes/{idSolicitacao}/rejeicoes", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
+    public ResponseEntity<?> rejeitarSolicitacao(
+            @RequestBody RespostaSolicitacaoDTO dto,
+            @RequestAttribute("user") Object user
+    ) throws ApiException {
+        solicitacaoOrientacaoService.rejeitarSolicitacao(dto.getMensagem(), dto.getIdSolicitacao(), user);
+        return ResponseEntity.status(204).build();
+    }
+
+    public static class RespostaSolicitacaoDTO {
+        private String mensagem;
+        private Long idSolicitacao;
+
+        public String getMensagem() {
+            return mensagem;
+        }
+
+        public Long getIdSolicitacao() {
+            return idSolicitacao;
+        }
+    }
 }
