@@ -7,8 +7,10 @@ import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 import com.psoft.tccmatch.repository.SolicitacaoOrientacaoRepository;
 import com.psoft.tccmatch.util.ErroProposta;
+import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -49,6 +51,23 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             return solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
         } else {
             throw ErroProposta.erroProposta();
+        }
+    }
+
+    @Override
+    public List<SolicitacaoOrientacao> listar(Object user) throws ApiException {
+        if (user instanceof Aluno) {
+            return solicitacaoOrientacaoRepository.findAllByAlunoIdAndSolicitante(
+                    ((Aluno) user).getId(),
+                    "PROFESSOR"
+            );
+        } else if (user instanceof Professor) {
+            return solicitacaoOrientacaoRepository.findAllByProfessorIdAndSolicitante(
+                    ((Professor) user).getId(),
+                    "ALUNO"
+            );
+        } else {
+            throw ErroUser.erroSemSolicitacoes();
         }
     }
 }
