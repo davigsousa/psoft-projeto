@@ -100,10 +100,10 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public SolicitacaoOrientacao solicitaOrientacao(OrientacaoDTO dto, Object user) throws ApiException {
+    public SolicitacaoOrientacao solicitaOrientacao(Long idProposta, Object user) throws ApiException {
         if (user instanceof Aluno) {
             List<PropostaTCC> propostas_disponiveis = propostaTCCService.getAllFromProf();
-            PropostaTCC proposta = propostaTCCService.getById(dto.getIdThemeTCC());
+            PropostaTCC proposta = propostaTCCService.getById(idProposta);
 
             if (!propostas_disponiveis.contains(proposta)) {
                 throw ErroProposta.erroPropostaNaoDisponivel();
