@@ -68,6 +68,17 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     }
 
     @Override
+    public Orientacao getById(Long id) throws ApiException {
+        Optional<Orientacao> orientacao = orientacaoRepository.findById(id);
+
+        if (orientacao.isEmpty()) {
+            throw ErroOrientacao.erroOrientacaoNaoExiste();
+        }
+
+        return orientacao.get();
+    }
+
+    @Override
     public List<Orientacao> getAllEmCurso() {
         return orientacaoRepository.findAllByPeriodoFimIsNull();
     }
@@ -75,5 +86,13 @@ public class OrientacaoServiceImpl implements OrientacaoService {
     @Override
     public List<Orientacao> getAllByPeriodoFinalizadas(String periodo) {
         return orientacaoRepository.findAllByPeriodoFim(periodo);
+    }
+
+    @Override
+    public void finalizarOrientacao(Long idOrientacao, String periodoFim) throws ApiException {
+        Orientacao orientacao = getById(idOrientacao);
+
+        orientacao.setPeriodoFim(periodoFim);
+        orientacaoRepository.saveAndFlush(orientacao);
     }
 }

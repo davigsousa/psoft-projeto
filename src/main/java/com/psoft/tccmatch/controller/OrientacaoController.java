@@ -41,4 +41,15 @@ public class OrientacaoController {
 
         return ResponseEntity.ok(orientacoes);
     }
+
+    @RequestMapping(path = "/orientacao/{idOrientacao}/finalizacoes/{periodoFim}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> finalizarOrientacao(
+        @PathVariable("idOrientacao") Long idOrientacao,
+        @PathVariable("periodoFim") String periodoFim
+    ) throws ApiException {
+        orientacaoService.finalizarOrientacao(idOrientacao, periodoFim);
+
+        return ResponseEntity.status(201).build();
+    }
 }
