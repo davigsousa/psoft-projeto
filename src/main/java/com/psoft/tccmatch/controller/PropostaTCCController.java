@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,10 @@ public class PropostaTCCController {
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAllByProfessores() {
         List<PropostaTCC> response = propostaTccService.getAllFromProf();
-        return ResponseEntity.ok(response);
+        List<PropostaTCCDTO.RespostaAPI> result = new ArrayList<>();
+        for (PropostaTCC propostaTCC : response) {
+            result.add(new PropostaTCCDTO.RespostaAPI(propostaTCC));
+        }
+        return ResponseEntity.ok(result);
     }
 }

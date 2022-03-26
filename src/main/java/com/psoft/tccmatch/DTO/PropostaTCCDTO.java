@@ -5,6 +5,7 @@ import com.psoft.tccmatch.model.PropostaTCC;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 
 import java.util.List;
+import java.util.Set;
 
 public class PropostaTCCDTO {
     private String titulo;
@@ -25,7 +26,7 @@ public class PropostaTCCDTO {
         public String descricao;
         public String status;
         public String criador;
-        public List<AreaEstudo> areas_de_estudo;
+        public Set<AreaEstudo> areas_de_estudo;
         public SolicitacaoOrientacao solicitacao;
 
         public RespostaAPI(PropostaTCC proposta) {
