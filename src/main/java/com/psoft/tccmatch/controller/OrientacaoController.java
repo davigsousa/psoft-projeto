@@ -21,9 +21,9 @@ public class OrientacaoController {
     @RequestMapping(path = "/orientacao", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody OrientacaoDTO orientacaoDTO) throws ApiException {
-        Orientacao date = orientacaoService.create(orientacaoDTO);
+        Orientacao orientacao = orientacaoService.create(orientacaoDTO);
 
-        return ResponseEntity.ok(date);
+        return ResponseEntity.ok(new OrientacaoDTO.RespostaAPI(orientacao));
     }
 
     @RequestMapping(path = "/orientacao", method = RequestMethod.GET)
