@@ -1,11 +1,12 @@
 package com.psoft.tccmatch.repository;
 
-import com.psoft.tccmatch.model.AdminUser;
 import com.psoft.tccmatch.model.Aluno;
+import com.psoft.tccmatch.model.AreaEstudo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
@@ -13,4 +14,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     Optional<Aluno> findByMatricula(@Param("matricula") String matricula);
 
     Optional<Aluno> findByEmail(String email);
+
+
+    List<Aluno> findAllByAreasEstudoIn(List<AreaEstudo> areaEstudos);
 }
