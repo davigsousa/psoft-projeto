@@ -49,4 +49,14 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     public List<AreaEstudo> getAll() {
         return areaEstudoRepository.findAll();
     }
+
+    @Override
+    public void selecionar(Long areaId, Object user) throws ApiException {
+
+    }
+
+    @Override
+    public void desselecionar(Long areaId, Object user) throws ApiException {
+
+    }
 }

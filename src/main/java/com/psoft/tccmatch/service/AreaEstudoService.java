@@ -14,4 +14,7 @@ public interface AreaEstudoService {
     AreaEstudo create(AreaDeEstudoDTO dto) throws ApiException;
 
     List<AreaEstudo> getAll();
+
+    void selecionar(Long areaId, Object user) throws ApiException;
+    void desselecionar(Long areaId, Object user) throws ApiException;
 }
