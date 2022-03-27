@@ -56,6 +56,7 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             }
 
             SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(proposta, (Professor) user);
+            enviadorEmail.enviar(solicitacao.getAluno().getEmail());
 
             return solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
         } else {
