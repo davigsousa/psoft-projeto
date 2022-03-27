@@ -27,9 +27,8 @@ public class ProfessorController {
 
     @RequestMapping(path = "/professores/{id}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> get(@PathVariable("id") String id) throws ApiException {
-        Long parsedId = Long.parseLong(id);
-        Professor response = professorService.getById(parsedId);
+    public ResponseEntity<?> get(@PathVariable("id") Long id) throws ApiException {
+        Professor response = professorService.getById(id);
         return ResponseEntity.ok(new ProfessorDTO.RespostaApi(response));
     }
 
@@ -44,17 +43,16 @@ public class ProfessorController {
 
     @RequestMapping(path = "/professores/{id}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable("id") String id) throws ApiException {
-        Long parsedId = Long.parseLong(id);
-        professorService.delete(parsedId);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) throws ApiException {
+        professorService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @RequestMapping(path = "/professores/{id}", method = RequestMethod.PUT)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ProfessorDTO dto) throws ApiException {
-        professorService.update(id, dto);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        Professor response = professorService.update(id, dto);
+        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(response));
     }
 
     @RequestMapping(path = "/professores/quota/{novaQuantidade}", method = RequestMethod.PUT)
