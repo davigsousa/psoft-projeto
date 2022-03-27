@@ -3,18 +3,27 @@ package com.psoft.tccmatch.service;
 import com.psoft.tccmatch.DTO.AreaDeEstudoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
+import com.psoft.tccmatch.model.User;
+import com.psoft.tccmatch.processors.ManipularAreaEstudoProcessor;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
 import com.psoft.tccmatch.util.ErroAreaEstudo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class AreaEstudoServiceImpl implements AreaEstudoService{
     @Autowired
     private AreaEstudoRepository areaEstudoRepository;
+
+    private final Map<String, ManipularAreaEstudoProcessor> manipularAreaEstudoProcessors;
+
+    public AreaEstudoServiceImpl(Map<String, ManipularAreaEstudoProcessor> manipularAreaEstudoProcessors) {
+        this.manipularAreaEstudoProcessors = manipularAreaEstudoProcessors;
+    }
 
     @Override
     public AreaEstudo getByAssunto(String assunto) throws ApiException {
@@ -51,12 +60,14 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     }
 
     @Override
-    public void selecionar(Long areaId, Object user) throws ApiException {
-
+    public void selecionar(Long areaId, User user) throws ApiException {
+        AreaEstudo area = getById(areaId);
+        manipularAreaEstudoProcessors.get(user.getTipo().name()).selecionarArea(area, user);
     }
 
     @Override
-    public void desselecionar(Long areaId, Object user) throws ApiException {
-
+    public void desselecionar(Long areaId, User user) throws ApiException {
+        AreaEstudo area = getById(areaId);
+        manipularAreaEstudoProcessors.get(user.getTipo().name()).desselecionarArea(area, user);
     }
 }

@@ -90,6 +90,11 @@ public class Professor implements User {
         this.senha = senha;
     }
 
+    @Override
+    public Tipo getTipo() {
+        return Tipo.PROF;
+    }
+
     public int getMaxOrientandos() {
         return maxOrientandos;
     }
