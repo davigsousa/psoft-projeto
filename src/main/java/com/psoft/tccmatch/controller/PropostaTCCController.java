@@ -38,7 +38,7 @@ public class PropostaTCCController {
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(path = "/propostas-tccs/professores", method = RequestMethod.GET)
+    @RequestMapping(path = "/propostas-tcc/professores", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAllByProfessores() {
         List<PropostaTCC> response = propostaTccService.getAllFromProf();
