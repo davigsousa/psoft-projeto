@@ -76,7 +76,7 @@ public class AlunoController {
         return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
     }
 
-    @RequestMapping(path = "alunos/professores-disponiveis", method = RequestMethod.GET)
+    @RequestMapping(path = "/alunos/professores-disponiveis", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getProfessoresDisponiveis(@RequestAttribute(value = "user") Object user) throws ApiException {
         Aluno aluno = (Aluno) user;
