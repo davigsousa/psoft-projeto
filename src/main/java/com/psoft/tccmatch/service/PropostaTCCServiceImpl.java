@@ -1,6 +1,8 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.PropostaTCCDTO;
+import com.psoft.tccmatch.enviadores.CriacaoPropostaTCCEmail;
+import com.psoft.tccmatch.enviadores.EnviadorEmail;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.model.AreaEstudo;
@@ -29,6 +31,9 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     private ProfessorRepository professorRepository;
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    EnviadorEmail enviadorEmail;
 
     @Override
     public PropostaTCC criar(PropostaTCCDTO dto, Object user) throws ApiException {
@@ -59,15 +64,18 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         }
         PropostaTCC proposta_criada = propostaTccRepository.saveAndFlush(propostaTcc);
 
+        List<Object> areaEstudos = new ArrayList<>();
         for (Long area_id : id_areas) {
             Optional<AreaEstudo> area = areaEstudoRepository.findById(area_id);
             if (area.isEmpty()) {
                 throw ErroAreaEstudo.erroAreaNaoExiste();
             }
             AreaEstudo area_estudo = area.get();
+            areaEstudos.add(area_estudo);
             proposta_criada.addAreaEstudo(area_estudo);
         }
 
+        enviadorEmail.enviar(areaEstudos);
         return propostaTccRepository.saveAndFlush(proposta_criada);
     }
 

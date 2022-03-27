@@ -1,13 +1,8 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
-import com.psoft.tccmatch.DTO.OrientacaoDTO;
-import com.psoft.tccmatch.DTO.ReporteDTO;
 import com.psoft.tccmatch.exception.ApiException;
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.Professor;
-import com.psoft.tccmatch.model.Reporte;
-import com.psoft.tccmatch.model.SolicitacaoOrientacao;
+import com.psoft.tccmatch.model.*;
 
 import java.util.List;
 
@@ -21,6 +16,8 @@ public interface AlunoService {
     Aluno getById(Long id) throws ApiException;
 
     List<Aluno> getAll();
+
+    List<Aluno> getAllByAreaEstudo(List<AreaEstudo> areasEstudo);
 
     void remover(String matricula) throws ApiException;
 

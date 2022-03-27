@@ -1,14 +1,12 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.AlunoDTO;
-import com.psoft.tccmatch.DTO.OrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.*;
 import com.psoft.tccmatch.repository.AlunoRepository;
 import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.repository.SolicitacaoOrientacaoRepository;
 import com.psoft.tccmatch.util.ErroAluno;
-import com.psoft.tccmatch.util.ErroProposta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,6 +89,11 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public List<Aluno> getAll() {
         return alunoRepository.findAll();
+    }
+
+    @Override
+    public List<Aluno> getAllByAreaEstudo(List<AreaEstudo> areasEstudo) {
+        return alunoRepository.findAllByAreasEstudoIn(areasEstudo);
     }
 
     @Override
