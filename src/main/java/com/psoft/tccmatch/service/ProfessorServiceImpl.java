@@ -86,7 +86,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public void update(Long id, ProfessorDTO dto) throws ApiException {
+    public Professor update(Long id, ProfessorDTO dto) throws ApiException {
         Optional<Professor> professor_existe = professorRepository.findById(id);
 
         if (professor_existe.isEmpty()) {
@@ -104,8 +104,8 @@ public class ProfessorServiceImpl implements ProfessorService {
         professor.setSenha(senhaCriptografada);
         int novoMaxOrientandos = dto.getMaxOrientandos().orElse(professor.getMaxOrientandos());
         professor.setMaxOrientandos(novoMaxOrientandos);
-        professorRepository.save(professor);
 
+        return professorRepository.save(professor);
     }
 
     @Override
