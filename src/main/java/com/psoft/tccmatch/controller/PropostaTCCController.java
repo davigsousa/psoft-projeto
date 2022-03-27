@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class PropostaTCCController {
@@ -32,17 +33,26 @@ public class PropostaTCCController {
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> getAll(@RequestAttribute("user") Object user) throws ApiException {
         List<PropostaTCC> response = propostaTccService.getAll(user);
-        return ResponseEntity.ok(response);
+        List<PropostaTCCDTO.RespostaAPI> result = response.stream()
+                .map(PropostaTCCDTO.RespostaAPI::new).collect(Collectors.toList());
+        return ResponseEntity.ok(result);
     }
 
     @RequestMapping(path = "tcc/all-professor", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAllByProfessores() {
         List<PropostaTCC> response = propostaTccService.getAllFromProf();
-        List<PropostaTCCDTO.RespostaAPI> result = new ArrayList<>();
-        for (PropostaTCC propostaTCC : response) {
-            result.add(new PropostaTCCDTO.RespostaAPI(propostaTCC));
-        }
+        List<PropostaTCCDTO.RespostaAPI> result = response.stream()
+                .map(PropostaTCCDTO.RespostaAPI::new).collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(path = "tcc/all-aluno", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('PROFESSOR')")
+    public ResponseEntity<?> getAllByAlunos() {
+        List<PropostaTCC> response = propostaTccService.getAllFromAluno();
+        List<PropostaTCCDTO.RespostaAPI> result = response.stream()
+                .map(PropostaTCCDTO.RespostaAPI::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
 }

@@ -7,6 +7,7 @@ import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.model.Professor;
 import com.psoft.tccmatch.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +57,7 @@ public class AlunoController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deletarAluno(@PathVariable("matricula") String matricula) throws ApiException {
         alunoService.remover(matricula);
-        return (ResponseEntity<?>) ResponseEntity.status(204);
+        return ResponseEntity.status(204).build();
     }
 
     @RequestMapping(path = "/aluno/area-estudo/{areaId}", method = RequestMethod.POST)

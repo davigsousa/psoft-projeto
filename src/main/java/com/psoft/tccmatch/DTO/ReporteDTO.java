@@ -18,12 +18,14 @@ public class ReporteDTO {
     }
 
     public static class RespostaAPI {
+        public Long id;
         public String periodo;
         public String problema;
         public String criador;
         public String orientacao;
 
         public RespostaAPI(Reporte reporte) {
+            this.id = reporte.getId();
             this.periodo = reporte.getPeriodo();
             this.problema = reporte.getProblema();
             this.criador = getCriador(reporte);

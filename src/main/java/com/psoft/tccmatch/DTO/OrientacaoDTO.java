@@ -28,16 +28,18 @@ public class OrientacaoDTO {
     }
 
     public static class RespostaAPI {
-        public PropostaTCC propostaTCC;
-        public Professor professor;
-        public Aluno aluno;
+        public Long id;
+        public PropostaTCCDTO.RespostaAPI propostaTCC;
+        public ProfessorDTO.RespostaApi professor;
+        public AlunoDTO.RespostaApi aluno;
         public String periodoInicio;
         public String periodoFim;
 
         public RespostaAPI(Orientacao orientacao) {
-            this.propostaTCC = orientacao.getPropostaTcc();
-            this.professor = orientacao.getProfessor();
-            this.aluno = orientacao.getAluno();
+            this.id = orientacao.getId();
+            this.propostaTCC = new PropostaTCCDTO.RespostaAPI(orientacao.getPropostaTcc());
+            this.professor = new ProfessorDTO.RespostaApi(orientacao.getProfessor());
+            this.aluno = new AlunoDTO.RespostaApi(orientacao.getAluno());
             this.periodoInicio = orientacao.getPeriodoInicio();
             this.periodoFim = orientacao.getPeriodoFim();
         }
