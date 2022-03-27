@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.service;
 
-import com.psoft.tccmatch.enviadores.AlunoSolicitarOrientacaoEmail;
+import com.psoft.tccmatch.enviadores.SolicitarOrientacaoEmail;
+import com.psoft.tccmatch.enviadores.ProfessorAceitarSolicitacaoEmail;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.model.Professor;
@@ -27,6 +28,9 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
 
     @Autowired
     private AlunoSolicitarOrientacaoEmail enviadorEmail;
+
+    @Autowired
+    private ProfessorAceitarSolicitacaoEmail enviadorEmailCoordenacao;
 
     @Override
     public SolicitacaoOrientacao solicitarOrientacao(Long idProposta, Object user) throws ApiException {
@@ -101,6 +105,8 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
 
         solicitacao.setAprovado(true);
         solicitacao.setResposta(mensagem);
+
+        enviadorEmailCoordenacao.enviar("admin@email.com");
 
         solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
     }
