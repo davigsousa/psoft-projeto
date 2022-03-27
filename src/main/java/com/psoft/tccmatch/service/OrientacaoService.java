@@ -25,4 +25,6 @@ public interface OrientacaoService {
     List<Orientacao> getAllByPeriodoFinalizadas(String periodo);
 
     void finalizarOrientacao(Long idOrientacao, String periodoFim) throws ApiException;
+
+    OrientacaoDTO.RespostaApiLista buscaPorPeriodo(String periodo);
 }
