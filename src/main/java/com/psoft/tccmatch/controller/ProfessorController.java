@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.controller;
 
+import com.psoft.tccmatch.DTO.CriacaoProfessorDTO;
 import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Professor;
@@ -20,7 +21,7 @@ public class ProfessorController {
 
     @RequestMapping(path = "/professores", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> cria(@RequestBody ProfessorDTO dto) throws ApiException {
+    public ResponseEntity<?> cria(@RequestBody CriacaoProfessorDTO dto) throws ApiException {
         Professor response = professorService.cria(dto);
         return ResponseEntity.ok(new ProfessorDTO.RespostaApi(response));
     }

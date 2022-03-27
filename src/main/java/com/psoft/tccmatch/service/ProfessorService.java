@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.service;
 
+import com.psoft.tccmatch.DTO.CriacaoProfessorDTO;
 import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Professor;
@@ -7,7 +8,7 @@ import com.psoft.tccmatch.model.Professor;
 import java.util.List;
 
 public interface ProfessorService {
-    Professor cria(ProfessorDTO dto) throws ApiException;
+    Professor cria(CriacaoProfessorDTO dto) throws ApiException;
 
     Professor getByEmail(String email) throws ApiException;
 
