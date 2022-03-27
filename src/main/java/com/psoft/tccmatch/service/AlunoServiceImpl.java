@@ -92,11 +92,6 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public List<Aluno> getAllByAreaEstudo(List<AreaEstudo> areasEstudo) {
-        return alunoRepository.findAllByAreasEstudoIn(areasEstudo);
-    }
-
-    @Override
     public void remover(String matricula) throws ApiException {
         Aluno aluno = get(matricula);
         alunoRepository.delete(aluno);

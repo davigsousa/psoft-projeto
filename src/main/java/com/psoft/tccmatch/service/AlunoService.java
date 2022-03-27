@@ -17,8 +17,6 @@ public interface AlunoService {
 
     List<Aluno> getAll();
 
-    List<Aluno> getAllByAreaEstudo(List<AreaEstudo> areasEstudo);
-
     void remover(String matricula) throws ApiException;
 
     Aluno selecionarArea(String matricula, Long areaID) throws ApiException;

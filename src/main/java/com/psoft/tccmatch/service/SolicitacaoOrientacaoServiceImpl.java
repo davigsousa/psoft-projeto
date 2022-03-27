@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.service;
 
+import com.psoft.tccmatch.enviadores.AlunoSolicitarOrientacaoEmail;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.model.Professor;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,6 +24,9 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
 
     @Autowired
     private SolicitacaoOrientacaoRepository solicitacaoOrientacaoRepository;
+
+    @Autowired
+    private AlunoSolicitarOrientacaoEmail enviadorEmail;
 
     @Override
     public SolicitacaoOrientacao solicitarOrientacao(Long idProposta, Object user) throws ApiException {
@@ -41,6 +44,8 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             );
 
             solicitacaoOrientacaoRepository.save(solicitacao);
+            enviadorEmail.enviar(solicitacao.getProfessor().getEmail());
+
             return solicitacao;
         } else if (user instanceof Professor) {
             PropostaTCC proposta = propostaTCCService.getById(idProposta);
@@ -51,6 +56,8 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             }
 
             SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(proposta, (Professor) user);
+            enviadorEmail.enviar(solicitacao.getAluno().getEmail());
+
             return solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
         } else {
             throw ErroProposta.erroProposta();
