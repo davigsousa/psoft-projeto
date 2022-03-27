@@ -15,7 +15,7 @@ public class ReporteController {
     private ReporteService reporteService;
 
 
-    @RequestMapping(path = "reportes/{orientacaoId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/reportes/{orientacaoId}", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> reportaOrientacao(
             @RequestAttribute(value = "user") Object user,
@@ -26,7 +26,7 @@ public class ReporteController {
         return ResponseEntity.ok(new ReporteDTO.RespostaAPI(reporte));
     }
 
-    @RequestMapping(path = "reportes", method = RequestMethod.GET)
+    @RequestMapping(path = "/reportes", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscaReportesPorData(@RequestParam("periodo") String periodo) {
         ReporteDTO.RespostaApiLista reportes = reporteService.buscaPorPeriodo(periodo);

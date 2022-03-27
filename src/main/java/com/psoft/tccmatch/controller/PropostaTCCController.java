@@ -29,7 +29,7 @@ public class PropostaTCCController {
         return ResponseEntity.ok(new PropostaTCCDTO.RespostaAPI(result));
     }
 
-    @RequestMapping(path = "propostas-tcc", method = RequestMethod.GET)
+    @RequestMapping(path = "/propostas-tcc", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> getAll(@RequestAttribute("user") Object user) throws ApiException {
         List<PropostaTCC> response = propostaTccService.getAll(user);
@@ -38,7 +38,7 @@ public class PropostaTCCController {
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(path = "propostas-tccs/professores", method = RequestMethod.GET)
+    @RequestMapping(path = "/propostas-tcc/professores", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getAllByProfessores() {
         List<PropostaTCC> response = propostaTccService.getAllFromProf();
@@ -47,7 +47,7 @@ public class PropostaTCCController {
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(path = "propostas-tcc/alunos", method = RequestMethod.GET)
+    @RequestMapping(path = "/propostas-tcc/alunos", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('PROFESSOR')")
     public ResponseEntity<?> getAllByAlunos() {
         List<PropostaTCC> response = propostaTccService.getAllFromAluno();

@@ -19,14 +19,14 @@ public class AreaEstudoController {
     @Autowired
     private AreaEstudoService areaEstudoService;
 
-    @RequestMapping(path = "areas-estudo/nova", method = RequestMethod.POST)
+    @RequestMapping(path = "/areas-estudo", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody AreaDeEstudoDTO dto) throws ApiException {
         AreaEstudo response = areaEstudoService.create(dto);
         return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(path = "areas-estudo/all", method = RequestMethod.GET)
+    @RequestMapping(path = "/areas-estudo", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> getAll() {
         List<AreaEstudo> response = areaEstudoService.getAll();

@@ -11,14 +11,14 @@ import java.util.Set;
 public class PropostaTCCDTO {
     private String titulo;
     private String descricao;
-    private Optional<String> status;
+    private String status;
     private List<Long> areasEstudo;
 
     public String getTitulo() { return titulo; }
 
     public String getDescricao() { return descricao; }
 
-    public Optional<String> getStatus() { return status; }
+    public String getStatus() { return status; }
 
     public List<Long> getAreasEstudo() { return areasEstudo; }
 
