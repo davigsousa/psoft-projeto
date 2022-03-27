@@ -86,8 +86,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public void update(ProfessorDTO dto) throws ApiException {
-        Optional<Professor> professor_existe = professorRepository.findById(dto.getId());
+    public void update(Long id, ProfessorDTO dto) throws ApiException {
+        Optional<Professor> professor_existe = professorRepository.findById(id);
 
         if (professor_existe.isEmpty()) {
             throw ErroProfessor.erroProfessorNaoExiste();

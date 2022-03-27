@@ -17,7 +17,7 @@ public interface ProfessorService {
 
     void delete(Long id) throws ApiException;
 
-    void update(ProfessorDTO dto) throws ApiException;
+    void update(Long id, ProfessorDTO dto) throws ApiException;
 
     void atualizarQuota(int novaQuantidade, Long professorId) throws ApiException;
 
