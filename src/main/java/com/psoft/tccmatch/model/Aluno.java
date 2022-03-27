@@ -15,7 +15,12 @@ public class Aluno implements User {
     private String email;
     private String senha;
     private String periodoDeConclusao;
-    @OneToMany()
+    @ManyToMany()
+    @JoinTable(
+            name = "aluno_area_estudo",
+            joinColumns = @JoinColumn(name = "aluno_id"),
+            inverseJoinColumns = @JoinColumn(name = "area_estudo_id")
+    )
     private List<AreaEstudo> areasEstudo;
     @OneToMany()
     private List<Reporte> reportes;
