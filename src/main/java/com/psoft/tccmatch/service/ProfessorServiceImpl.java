@@ -143,21 +143,4 @@ public class ProfessorServiceImpl implements ProfessorService {
         return labs;
     }
 
-    @Override
-    public Professor selecionarArea(Long profID, Long areaId) throws ApiException {
-        Professor professor = this.getById(profID);
-        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
-
-        professor.adicionarAreaEstudo(areaEstudo);
-        return professorRepository.save(professor);
-    }
-
-    @Override
-    public Professor desselecionarArea(Long profID, Long areaId) throws ApiException {
-        Professor professor = this.getById(profID);
-        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
-
-        professor.removerAreaEstudo(areaEstudo);
-        return professorRepository.save(professor);
-    }
 }
