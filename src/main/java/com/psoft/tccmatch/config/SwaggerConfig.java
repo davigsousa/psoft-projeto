@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.web.bind.annotation.RequestAttribute;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiKey;
@@ -22,6 +23,7 @@ public class SwaggerConfig {
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .ignoredParameterTypes(RequestAttribute.class)
                 .select().apis(RequestHandlerSelectors.basePackage("com.psoft.tccmatch"))
                 .build()
                 .securitySchemes(Lists.newArrayList(apiKey()))
