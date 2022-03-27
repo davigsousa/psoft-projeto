@@ -52,8 +52,8 @@ public class ProfessorController {
 
     @RequestMapping(path = "/professores/{id}", method = RequestMethod.PUT)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> update(@RequestBody ProfessorDTO dto) throws ApiException {
-        professorService.update(dto);
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ProfessorDTO dto) throws ApiException {
+        professorService.update(id, dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
