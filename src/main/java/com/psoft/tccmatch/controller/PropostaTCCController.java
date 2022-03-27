@@ -46,4 +46,13 @@ public class PropostaTCCController {
                 .map(PropostaTCCDTO.RespostaAPI::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
+
+    @RequestMapping(path = "tcc/all-aluno", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('PROFESSOR')")
+    public ResponseEntity<?> getAllByAlunos() {
+        List<PropostaTCC> response = propostaTccService.getAllFromAluno();
+        List<PropostaTCCDTO.RespostaAPI> result = response.stream()
+                .map(PropostaTCCDTO.RespostaAPI::new).collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
 }
