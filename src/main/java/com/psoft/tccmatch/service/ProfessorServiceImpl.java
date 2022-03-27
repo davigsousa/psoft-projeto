@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.service;
 
+import com.psoft.tccmatch.DTO.CriacaoProfessorDTO;
 import com.psoft.tccmatch.DTO.ProfessorDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.*;
@@ -29,7 +30,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private OrientacaoService orientacaoService;
 
     @Override
-    public Professor cria(ProfessorDTO dto) throws ApiException {
+    public Professor cria(CriacaoProfessorDTO dto) throws ApiException {
         Optional<Professor> professor_existe = professorRepository.findByEmail(dto.getEmail());
 
         if (professor_existe.isPresent()) {
@@ -102,7 +103,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         professor.setNome(dto.getNome());
         String senhaCriptografada = bCryptPasswordEncoder.encode(dto.getSenha());
         professor.setSenha(senhaCriptografada);
-        int novoMaxOrientandos = dto.getMaxOrientandos().orElse(professor.getMaxOrientandos());
+        int novoMaxOrientandos = dto.getMaxOrientandos();
         professor.setMaxOrientandos(novoMaxOrientandos);
 
         return professorRepository.save(professor);
