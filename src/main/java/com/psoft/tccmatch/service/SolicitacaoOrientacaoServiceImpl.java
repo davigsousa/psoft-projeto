@@ -1,5 +1,6 @@
 package com.psoft.tccmatch.service;
 
+import com.psoft.tccmatch.enviadores.AlunoSolicitarOrientacaoEmail;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;
 import com.psoft.tccmatch.model.Professor;
@@ -24,6 +25,9 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
     @Autowired
     private SolicitacaoOrientacaoRepository solicitacaoOrientacaoRepository;
 
+    @Autowired
+    private AlunoSolicitarOrientacaoEmail enviadorEmail;
+
     @Override
     public SolicitacaoOrientacao solicitarOrientacao(Long idProposta, Object user) throws ApiException {
         if (user instanceof Aluno) {
@@ -40,6 +44,8 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             );
 
             solicitacaoOrientacaoRepository.save(solicitacao);
+            enviadorEmail.enviar(solicitacao.getProfessor().getEmail());
+
             return solicitacao;
         } else if (user instanceof Professor) {
             PropostaTCC proposta = propostaTCCService.getById(idProposta);
