@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -51,6 +50,7 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
             }
 
             SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(proposta, (Professor) user);
+
             return solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
         } else {
             throw ErroProposta.erroProposta();

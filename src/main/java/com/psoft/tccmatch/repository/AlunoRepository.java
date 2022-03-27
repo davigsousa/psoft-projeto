@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     @Query("SELECT a FROM Aluno a WHERE a.matricula = :matricula")
@@ -16,5 +17,5 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     Optional<Aluno> findByEmail(String email);
 
 
-    List<Aluno> findAllByAreasEstudoIn(List<AreaEstudo> areaEstudos);
+    List<Aluno> findAllByAreasEstudoIn(Set<AreaEstudo> areaEstudos);
 }

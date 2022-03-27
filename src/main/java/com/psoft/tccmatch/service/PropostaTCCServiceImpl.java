@@ -31,9 +31,8 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     private ProfessorRepository professorRepository;
     @Autowired
     private AlunoRepository alunoRepository;
-
     @Autowired
-    EnviadorEmail enviadorEmail;
+    CriacaoPropostaTCCEmail enviadorEmail;
 
     @Override
     public PropostaTCC criar(PropostaTCCDTO dto, Object user) throws ApiException {
@@ -60,22 +59,23 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         } else if (user instanceof Aluno) {
             propostaTcc.setAluno((Aluno) user);
         } else {
-                throw ErroProposta.erroProposta();
+            throw ErroProposta.erroProposta();
         }
         PropostaTCC proposta_criada = propostaTccRepository.saveAndFlush(propostaTcc);
 
-        List<Object> areaEstudos = new ArrayList<>();
         for (Long area_id : id_areas) {
             Optional<AreaEstudo> area = areaEstudoRepository.findById(area_id);
             if (area.isEmpty()) {
                 throw ErroAreaEstudo.erroAreaNaoExiste();
             }
             AreaEstudo area_estudo = area.get();
-            areaEstudos.add(area_estudo);
             proposta_criada.addAreaEstudo(area_estudo);
         }
 
-        enviadorEmail.enviar(areaEstudos);
+        if (proposta_criada.getAluno() == null) {
+            notificarTodosAlunos(proposta_criada);
+        }
+
         return propostaTccRepository.saveAndFlush(proposta_criada);
     }
 
@@ -110,5 +110,12 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     @Override
     public List<PropostaTCC> getAllFromAluno() {
         return propostaTccRepository.findCriadoByAluno();
+    }
+
+    private void notificarTodosAlunos(PropostaTCC propostaTCC) {
+        List<Aluno> alunos = alunoRepository.findAllByAreasEstudoIn(propostaTCC.getAreasEstudo());
+        for (Aluno aluno : alunos) {
+            enviadorEmail.enviar(aluno.getEmail());
+        }
     }
 }

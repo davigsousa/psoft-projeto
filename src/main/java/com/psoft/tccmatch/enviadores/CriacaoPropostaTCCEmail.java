@@ -11,20 +11,8 @@ import java.util.List;
 
 @Service
 public class CriacaoPropostaTCCEmail implements EnviadorEmail {
-    @Autowired
-    AlunoService alunoService;
-
     @Override
-    public void enviar(List<Object> dados) {
-        List<AreaEstudo> areaEstudos = new ArrayList<>();
-        for (Object dado : dados) {
-            AreaEstudo area = (AreaEstudo) dado;
-            areaEstudos.add(area);
-        }
-
-        List<Aluno> alunos = alunoService.getAllByAreaEstudo(areaEstudos);
-        for (Aluno aluno : alunos) {
-            System.out.println("NOTIFICAÇÃO: E-mail enviado para " + aluno.getEmail());
-        }
+    public void enviar(String email) {
+        System.out.println("NOTIFICAÇÃO: E-mail de criação de proposta de TCC enviado para " + email);
     }
 }
