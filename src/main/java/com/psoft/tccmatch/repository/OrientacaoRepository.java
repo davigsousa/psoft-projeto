@@ -10,4 +10,8 @@ public interface OrientacaoRepository extends JpaRepository<Orientacao, Long> {
     List<Orientacao> findAllByProfessorId(Long id);
     List<Orientacao> findAllByPeriodoFim(String periodoFim);
     List<Orientacao> findAllByPeriodoFimIsNull();
+
+    List<Orientacao> findAllByPeriodoInicioAndPeriodoFimIsNotNull(String periodo);
+
+    List<Orientacao> findAllByPeriodoInicioAndPeriodoFimIsNull(String periodo);
 }

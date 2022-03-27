@@ -1,6 +1,7 @@
 package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.OrientacaoDTO;
+import com.psoft.tccmatch.DTO.ReporteDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.*;
 import com.psoft.tccmatch.repository.OrientacaoRepository;
@@ -94,5 +95,21 @@ public class OrientacaoServiceImpl implements OrientacaoService {
 
         orientacao.setPeriodoFim(periodoFim);
         orientacaoRepository.saveAndFlush(orientacao);
+    }
+
+    @Override
+    public OrientacaoDTO.RespostaApiLista buscaPorPeriodo(String periodo) {
+        List<Orientacao> orientacoes_finalizada = this.buscaPorPeriodoFinalizada(periodo);
+        List<Orientacao> orientacoes_cursando = this.buscaPorPeriodoEmCurso(periodo);
+
+        return new OrientacaoDTO.RespostaApiLista(orientacoes_cursando, orientacoes_finalizada);
+    }
+
+    private List<Orientacao> buscaPorPeriodoFinalizada(String periodo) {
+        return orientacaoRepository.findAllByPeriodoInicioAndPeriodoFimIsNotNull(periodo);
+    }
+
+    private List<Orientacao> buscaPorPeriodoEmCurso(String periodo) {
+        return orientacaoRepository.findAllByPeriodoInicioAndPeriodoFimIsNull(periodo);
     }
 }

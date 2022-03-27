@@ -52,4 +52,11 @@ public class OrientacaoController {
 
         return ResponseEntity.status(201).build();
     }
+
+    @RequestMapping(path = "/orientacao/relatorio", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> relatorioOrientacoes(@RequestParam(value = "periodo") String periodo) {
+        OrientacaoDTO.RespostaApiLista resposta = orientacaoService.buscaPorPeriodo(periodo);
+        return ResponseEntity.ok(resposta);
+    }
 }
