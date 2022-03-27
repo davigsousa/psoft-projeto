@@ -18,7 +18,7 @@ public class OrientacaoController {
     @Autowired
     private OrientacaoService orientacaoService;
 
-    @RequestMapping(path = "/orientacao", method = RequestMethod.POST)
+    @RequestMapping(path = "/orientacoes", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody OrientacaoDTO orientacaoDTO) throws ApiException {
         Orientacao orientacao = orientacaoService.create(orientacaoDTO);
@@ -26,7 +26,7 @@ public class OrientacaoController {
         return ResponseEntity.ok(new OrientacaoDTO.RespostaAPI(orientacao));
     }
 
-    @RequestMapping(path = "/orientacao", method = RequestMethod.GET)
+    @RequestMapping(path = "/orientacoes", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('PROFESSOR')")
     public ResponseEntity<?> listar(@RequestAttribute("user") Object user) {
         List<Orientacao> orientacoes = orientacaoService.getAllByProfessor((Professor) user);
@@ -34,7 +34,7 @@ public class OrientacaoController {
         return ResponseEntity.ok(orientacoes);
     }
 
-    @RequestMapping(path = "/orientacao/periodo/{periodo}", method = RequestMethod.GET)
+    @RequestMapping(path = "/orientacoes/{periodo}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> listarPorPeriodo(@PathVariable("periodo") String periodo) {
         OrientacaoDTO.RespostaApiLista orientacoes = orientacaoService.getAllByPeriodo(periodo);
@@ -42,7 +42,7 @@ public class OrientacaoController {
         return ResponseEntity.ok(orientacoes);
     }
 
-    @RequestMapping(path = "/orientacao/{idOrientacao}/finalizacoes/{periodoFim}", method = RequestMethod.POST)
+    @RequestMapping(path = "/orientacoes/{idOrientacao}/finalizacoes/{periodoFim}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> finalizarOrientacao(
         @PathVariable("idOrientacao") Long idOrientacao,
@@ -53,7 +53,7 @@ public class OrientacaoController {
         return ResponseEntity.status(201).build();
     }
 
-    @RequestMapping(path = "/orientacao/relatorio", method = RequestMethod.GET)
+    @RequestMapping(path = "/orientacoes/relatorio", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> relatorioOrientacoes(@RequestParam(value = "periodo") String periodo) {
         OrientacaoDTO.RespostaApiLista resposta = orientacaoService.buscaPorPeriodo(periodo);
