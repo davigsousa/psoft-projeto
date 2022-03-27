@@ -28,6 +28,7 @@ public class OrientacaoDTO {
     }
 
     public static class RespostaAPI {
+        public Long id;
         public PropostaTCCDTO.RespostaAPI propostaTCC;
         public ProfessorDTO.RespostaApi professor;
         public AlunoDTO.RespostaApi aluno;
@@ -35,6 +36,7 @@ public class OrientacaoDTO {
         public String periodoFim;
 
         public RespostaAPI(Orientacao orientacao) {
+            this.id = orientacao.getId();
             this.propostaTCC = new PropostaTCCDTO.RespostaAPI(orientacao.getPropostaTcc());
             this.professor = new ProfessorDTO.RespostaApi(orientacao.getProfessor());
             this.aluno = new AlunoDTO.RespostaApi(orientacao.getAluno());

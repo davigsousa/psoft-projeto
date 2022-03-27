@@ -32,6 +32,10 @@ public class Orientacao {
         this.periodoFim = null;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public PropostaTCC getTcc() {
         return propostaTcc;
     }

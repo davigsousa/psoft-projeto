@@ -4,6 +4,7 @@ import com.psoft.tccmatch.model.SolicitacaoOrientacao;
 
 public class SolicitacaoOrientacaoDTO {
     public static class RespostaAPI {
+        public Long id;
         public String resposta;
         public Boolean isAprovado;
         public String solicitante;
@@ -11,6 +12,7 @@ public class SolicitacaoOrientacaoDTO {
         public String proposta;
 
         public RespostaAPI(SolicitacaoOrientacao solicitacao) {
+            this.id = solicitacao.getId();
             this.resposta = solicitacao.getResposta();
             this.isAprovado = solicitacao.getAprovado();
             this.professor = solicitacao.getProfessor().getEmail();

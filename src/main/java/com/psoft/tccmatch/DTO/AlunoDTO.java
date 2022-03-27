@@ -35,6 +35,7 @@ public class AlunoDTO {
     }
 
     public static class RespostaApi {
+        public Long id;
         public String nome;
         public String email;
         public String matricula;
@@ -42,6 +43,7 @@ public class AlunoDTO {
         public List<AreaEstudo> areasEstudo;
 
         public RespostaApi(Aluno aluno) {
+            this.id = aluno.getId();
             this.nome = aluno.getNome();
             this.email = aluno.getEmail();
             this.matricula = aluno.getMatricula();

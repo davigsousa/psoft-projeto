@@ -23,6 +23,7 @@ public class PropostaTCCDTO {
     public List<Long> getAreasEstudo() { return areasEstudo; }
 
     public static class RespostaAPI {
+        public Long id;
         public String titulo;
         public String descricao;
         public String status;
@@ -31,6 +32,7 @@ public class PropostaTCCDTO {
         public SolicitacaoOrientacao solicitacao;
 
         public RespostaAPI(PropostaTCC proposta) {
+            this.id = proposta.getId();
             this.titulo = proposta.getTitulo();
             this.descricao = proposta.getDescricao();
             this.status = proposta.getStatus();
