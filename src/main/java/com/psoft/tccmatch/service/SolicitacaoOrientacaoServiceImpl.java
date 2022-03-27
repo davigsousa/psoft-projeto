@@ -27,7 +27,7 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
     private SolicitacaoOrientacaoRepository solicitacaoOrientacaoRepository;
 
     @Autowired
-    private AlunoSolicitarOrientacaoEmail enviadorEmail;
+    private SolicitarOrientacaoEmail enviadorEmail;
 
     @Autowired
     private ProfessorAceitarSolicitacaoEmail enviadorEmailCoordenacao;
