@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class SolicitacaoOrientacaoController {
@@ -23,14 +24,17 @@ public class SolicitacaoOrientacaoController {
             @RequestAttribute("user") Object user
     ) throws ApiException {
         SolicitacaoOrientacao response = solicitacaoOrientacaoService.solicitarOrientacao(idProposta, user);
-        return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPIAluno(response));
+        return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPI(response));
     }
 
     @RequestMapping(path = "/solicitacoes", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> listarSolicitacoes(@RequestAttribute("user") Object user) throws ApiException {
         List<SolicitacaoOrientacao> solicitacoes = solicitacaoOrientacaoService.listar(user);
-        return ResponseEntity.status(200).body(solicitacoes);
+
+        List<SolicitacaoOrientacaoDTO.RespostaAPI> resultado = solicitacoes.stream()
+                .map(SolicitacaoOrientacaoDTO.RespostaAPI::new).collect(Collectors.toList());
+        return ResponseEntity.status(200).body(resultado);
     }
 
     @RequestMapping(path = "/solicitacoes/aprovacoes", method = RequestMethod.POST)
