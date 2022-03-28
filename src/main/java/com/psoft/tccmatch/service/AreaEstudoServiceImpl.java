@@ -62,12 +62,18 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     @Override
     public void selecionar(Long areaId, User user) throws ApiException {
         AreaEstudo area = getById(areaId);
-        manipularAreaEstudoProcessors.get(user.getTipo().name()).selecionarArea(area, user);
+        String name = getProcessorName(user);
+        manipularAreaEstudoProcessors.get(name).selecionarArea(area, user);
     }
 
     @Override
     public void desselecionar(Long areaId, User user) throws ApiException {
         AreaEstudo area = getById(areaId);
-        manipularAreaEstudoProcessors.get(user.getTipo().name()).desselecionarArea(area, user);
+        String name = getProcessorName(user);
+        manipularAreaEstudoProcessors.get(name).desselecionarArea(area, user);
+    }
+
+    private String getProcessorName(User user) {
+        return user.getTipo().name() + "_Area";
     }
 }

@@ -2,12 +2,9 @@ package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.PropostaTCCDTO;
 import com.psoft.tccmatch.enviadores.CriacaoPropostaTCCEmail;
-import com.psoft.tccmatch.enviadores.EnviadorEmail;
 import com.psoft.tccmatch.exception.ApiException;
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.AreaEstudo;
-import com.psoft.tccmatch.model.Professor;
-import com.psoft.tccmatch.model.PropostaTCC;
+import com.psoft.tccmatch.model.*;
+import com.psoft.tccmatch.processors.PropostaTCCProcessor;
 import com.psoft.tccmatch.repository.AlunoRepository;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
 import com.psoft.tccmatch.repository.ProfessorRepository;
@@ -26,7 +23,7 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     @Autowired
     private PropostaTCCRepository propostaTccRepository;
     @Autowired
-    private AreaEstudoRepository areaEstudoRepository;
+    private AreaEstudoService areaEstudoService;
     @Autowired
     private ProfessorRepository professorRepository;
     @Autowired
@@ -34,17 +31,21 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
     @Autowired
     CriacaoPropostaTCCEmail enviadorEmail;
 
-    @Override
-    public PropostaTCC criar(PropostaTCCDTO dto, Object user) throws ApiException {
-        Optional<PropostaTCC> tcc_existe = propostaTccRepository.findByTitulo(dto.getTitulo());
+    private final Map<String, PropostaTCCProcessor> propostaTCCProcessors;
 
-        if (tcc_existe.isPresent()) {
+    public PropostaTCCServiceImpl(Map<String, PropostaTCCProcessor> propostaTCCProcessors) {
+        this.propostaTCCProcessors = propostaTCCProcessors;
+    }
+
+    @Override
+    public PropostaTCC criar(PropostaTCCDTO dto, User user) throws ApiException {
+        Optional<PropostaTCC> tccExiste = propostaTccRepository.findByTitulo(dto.getTitulo());
+        if (tccExiste.isPresent()) {
             throw ErroTCC.erroTCCJaExiste();
         }
 
-        List<Long> id_areas = dto.getAreasEstudo();
-
-        if (id_areas.size() == 0) {
+        List<Long> idAreas = dto.getAreasEstudo();
+        if (idAreas.size() == 0) {
             throw ErroTCC.erroTCCDeveTerAreaDeEstudo();
         }
 
@@ -54,29 +55,13 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
                 dto.getStatus()
         );
 
-        if (user instanceof Professor) {
-            propostaTcc.setProfessor((Professor) user);
-        } else if (user instanceof Aluno) {
-            propostaTcc.setAluno((Aluno) user);
-        } else {
-            throw ErroProposta.erroProposta();
-        }
-        PropostaTCC proposta_criada = propostaTccRepository.saveAndFlush(propostaTcc);
-
-        for (Long area_id : id_areas) {
-            Optional<AreaEstudo> area = areaEstudoRepository.findById(area_id);
-            if (area.isEmpty()) {
-                throw ErroAreaEstudo.erroAreaNaoExiste();
-            }
-            AreaEstudo area_estudo = area.get();
-            proposta_criada.addAreaEstudo(area_estudo);
+        for (Long areaId : idAreas) {
+            AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
+            propostaTcc.addAreaEstudo(areaEstudo);
         }
 
-        if (proposta_criada.getAluno() == null) {
-            notificarTodosAlunos(proposta_criada);
-        }
-
-        return propostaTccRepository.saveAndFlush(proposta_criada);
+        PropostaTCC propostaCriada = propostaTCCProcessors.get(getProcessorName(user)).criar(propostaTcc, user);
+        return propostaTccRepository.saveAndFlush(propostaCriada);
     }
 
     @Override
@@ -90,16 +75,8 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         return tccOpt.get();
     }
     
-    public List<PropostaTCC> getAll(Object user) throws ApiException {
-        if (user instanceof Aluno) {
-            Aluno aluno = (Aluno) user;
-            return propostaTccRepository.findAllByAlunoId(aluno.getId());
-        } else if (user instanceof Professor) {
-            Professor professor = (Professor) user;
-            return propostaTccRepository.findAllByProfessorId(professor.getId());
-        } else {
-            throw ErroUser.erroTipoUsuario();
-        }
+    public List<PropostaTCC> getAll(User user) throws ApiException {
+        return propostaTCCProcessors.get(getProcessorName(user)).getAll(user);
     }
 
     @Override
@@ -112,10 +89,7 @@ public class PropostaTCCServiceImpl implements PropostaTCCService {
         return propostaTccRepository.findCriadoByAluno();
     }
 
-    private void notificarTodosAlunos(PropostaTCC propostaTCC) {
-        List<Aluno> alunos = alunoRepository.findAllByAreasEstudoIn(propostaTCC.getAreasEstudo());
-        for (Aluno aluno : alunos) {
-            enviadorEmail.enviar(aluno.getEmail());
-        }
+    private String getProcessorName(User user) {
+        return user.getTipo().name() + "_Proposta";
     }
 }

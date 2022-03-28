@@ -3,6 +3,7 @@ package com.psoft.tccmatch.controller;
 import com.psoft.tccmatch.DTO.PropostaTCCDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.PropostaTCC;
+import com.psoft.tccmatch.model.User;
 import com.psoft.tccmatch.service.PropostaTCCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +26,14 @@ public class PropostaTCCController {
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     @Transactional(propagation = Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public ResponseEntity<?> criarTCC(@RequestBody PropostaTCCDTO tccDTO, @RequestAttribute("user") Object user) throws ApiException {
-        PropostaTCC result = propostaTccService.criar(tccDTO, user);
+        PropostaTCC result = propostaTccService.criar(tccDTO, (User) user);
         return ResponseEntity.ok(new PropostaTCCDTO.RespostaAPI(result));
     }
 
     @RequestMapping(path = "/propostas-tcc", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> getAll(@RequestAttribute("user") Object user) throws ApiException {
-        List<PropostaTCC> response = propostaTccService.getAll(user);
+        List<PropostaTCC> response = propostaTccService.getAll((User) user);
         List<PropostaTCCDTO.RespostaAPI> result = response.stream()
                 .map(PropostaTCCDTO.RespostaAPI::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);

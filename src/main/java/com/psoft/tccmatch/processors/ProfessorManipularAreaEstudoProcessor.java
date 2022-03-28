@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-@Component("PROF")
+@Component("PROF_Area")
 public class ProfessorManipularAreaEstudoProcessor implements ManipularAreaEstudoProcessor {
     @Lazy
     @Autowired
