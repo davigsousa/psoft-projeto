@@ -3,10 +3,8 @@ package com.psoft.tccmatch.service;
 import com.psoft.tccmatch.enviadores.SolicitarOrientacaoEmail;
 import com.psoft.tccmatch.enviadores.ProfessorAceitarSolicitacaoEmail;
 import com.psoft.tccmatch.exception.ApiException;
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.Professor;
-import com.psoft.tccmatch.model.PropostaTCC;
-import com.psoft.tccmatch.model.SolicitacaoOrientacao;
+import com.psoft.tccmatch.model.*;
+import com.psoft.tccmatch.processors.SolicitacaoProcessor.SolicitacaoProcessor;
 import com.psoft.tccmatch.repository.SolicitacaoOrientacaoRepository;
 import com.psoft.tccmatch.util.ErroProposta;
 import com.psoft.tccmatch.util.ErroSolicitacao;
@@ -15,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -32,57 +31,22 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
     @Autowired
     private ProfessorAceitarSolicitacaoEmail enviadorEmailCoordenacao;
 
+    private final Map<String, SolicitacaoProcessor> solicitacaoProcessors;
+
+    public SolicitacaoOrientacaoServiceImpl(Map<String, SolicitacaoProcessor> solicitacaoProcessors) {
+        this.solicitacaoProcessors = solicitacaoProcessors;
+    }
+
+
     @Override
-    public SolicitacaoOrientacao solicitarOrientacao(Long idProposta, Object user) throws ApiException {
-        if (user instanceof Aluno) {
-            PropostaTCC proposta = propostaTCCService.getById(idProposta);
-            List<PropostaTCC> propostasDisponiveis = propostaTCCService.getAll(proposta.getProfessor());
-
-            if (!propostasDisponiveis.contains(proposta)) {
-                throw ErroProposta.erroPropostaNaoDisponivel();
-            }
-
-            SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(
-                    proposta,
-                    (Aluno) user
-            );
-
-            solicitacaoOrientacaoRepository.save(solicitacao);
-            enviadorEmail.enviar(solicitacao.getProfessor().getEmail());
-
-            return solicitacao;
-        } else if (user instanceof Professor) {
-            PropostaTCC proposta = propostaTCCService.getById(idProposta);
-            List<PropostaTCC> propostasDisponiveis = propostaTCCService.getAll(proposta.getAluno());
-
-            if (!propostasDisponiveis.contains(proposta)) {
-                throw ErroProposta.erroPropostaNaoDisponivel();
-            }
-
-            SolicitacaoOrientacao solicitacao = new SolicitacaoOrientacao(proposta, (Professor) user);
-            enviadorEmail.enviar(solicitacao.getAluno().getEmail());
-
-            return solicitacaoOrientacaoRepository.saveAndFlush(solicitacao);
-        } else {
-            throw ErroProposta.erroProposta();
-        }
+    public SolicitacaoOrientacao solicitarOrientacao(Long idProposta, User user) throws ApiException {
+        PropostaTCC proposta = propostaTCCService.getById(idProposta);
+        return solicitacaoProcessors.get(getProcessorName(user)).criar(proposta, user);
     }
 
     @Override
-    public List<SolicitacaoOrientacao> listar(Object user) throws ApiException {
-        if (user instanceof Aluno) {
-            return solicitacaoOrientacaoRepository.findAllByAlunoIdAndSolicitante(
-                    ((Aluno) user).getId(),
-                    "PROFESSOR"
-            );
-        } else if (user instanceof Professor) {
-            return solicitacaoOrientacaoRepository.findAllByProfessorIdAndSolicitante(
-                    ((Professor) user).getId(),
-                    "ALUNO"
-            );
-        } else {
-            throw ErroUser.erroSemSolicitacoes();
-        }
+    public List<SolicitacaoOrientacao> listar(User user) throws ApiException {
+        return solicitacaoProcessors.get(getProcessorName(user)).listar(user);
     }
 
     @Override
@@ -139,5 +103,9 @@ public class SolicitacaoOrientacaoServiceImpl implements SolicitacaoOrientacaoSe
         } else {
             throw ErroUser.erroTipoUsuario();
         }
+    }
+
+    private String getProcessorName(User user) {
+        return user.getTipo().name() + "_Solicitacao";
     }
 }

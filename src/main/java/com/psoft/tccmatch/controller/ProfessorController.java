@@ -62,20 +62,4 @@ public class ProfessorController {
         professorService.atualizarQuota(novaQuantidade, ((Professor) user).getId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-    @RequestMapping(path = "/professores/areas-estudo/{areaId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('PROFESSOR')")
-    public ResponseEntity<?> selecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
-        Professor professor = (Professor) user;
-        Professor result = professorService.selecionarArea(professor.getId(), areaId);
-        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(result));
-    }
-
-    @RequestMapping(path = "/professores/areas-estudo/{areaId}", method = RequestMethod.DELETE)
-    @PreAuthorize("hasAuthority('PROFESSOR')")
-    public ResponseEntity<?> desselecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
-        Professor professor = (Professor) user;
-        Professor result = professorService.desselecionarArea(professor.getId(), areaId);
-        return ResponseEntity.ok(new ProfessorDTO.RespostaApi(result));
-    }
 }

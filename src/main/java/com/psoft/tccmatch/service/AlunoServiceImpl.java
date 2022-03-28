@@ -98,24 +98,6 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public Aluno selecionarArea(String matricula, Long areaId) throws ApiException {
-        Aluno aluno = this.get(matricula);
-        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
-
-        aluno.adicionarAreaEstudo(areaEstudo);
-        return alunoRepository.save(aluno);
-    }
-
-    @Override
-    public Aluno desselecionarArea(String matricula, Long areaId) throws ApiException {
-        Aluno aluno = this.get(matricula);
-        AreaEstudo areaEstudo = areaEstudoService.getById(areaId);
-
-        aluno.removerAreaEstudo(areaEstudo);
-        return alunoRepository.save(aluno);
-    }
-
-    @Override
     public List<Professor> getProfessoresDisp(String matricula) throws ApiException {
         Aluno aluno = this.get(matricula);
         List<AreaEstudo> areasEstudo = aluno.getAreasEstudo();

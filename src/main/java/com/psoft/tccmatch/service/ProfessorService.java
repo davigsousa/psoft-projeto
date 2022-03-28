@@ -22,7 +22,4 @@ public interface ProfessorService {
 
     void atualizarQuota(int novaQuantidade, Long professorId) throws ApiException;
 
-    Professor selecionarArea(Long profId, Long areaID) throws ApiException;
-
-    Professor desselecionarArea(Long profId, Long areaID) throws ApiException;
 }

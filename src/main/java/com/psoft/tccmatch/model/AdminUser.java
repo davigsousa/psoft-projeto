@@ -40,4 +40,9 @@ public class AdminUser implements User {
         this.senha = senha;
     }
 
+    @Override
+    public Tipo getTipo() {
+        return Tipo.ADMIN;
+    }
+
 }

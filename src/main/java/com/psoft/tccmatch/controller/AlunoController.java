@@ -60,22 +60,6 @@ public class AlunoController {
         return ResponseEntity.status(204).build();
     }
 
-    @RequestMapping(path = "/alunos/areas-estudo/{areaId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> selecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
-        Aluno aluno = (Aluno) user;
-        Aluno result = alunoService.selecionarArea(aluno.getMatricula(), areaId);
-        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
-    }
-
-    @RequestMapping(path = "/alunos/areas-estudo/{areaId}", method = RequestMethod.DELETE)
-    @PreAuthorize("hasAuthority('ALUNO')")
-    public ResponseEntity<?> desselecionarAreaEstudo(@RequestAttribute(value = "user") Object user, @PathVariable("areaId") Long areaId) throws ApiException {
-        Aluno aluno = (Aluno) user;
-        Aluno result = alunoService.desselecionarArea(aluno.getMatricula(), areaId);
-        return ResponseEntity.ok(new AlunoDTO.RespostaApi(result));
-    }
-
     @RequestMapping(path = "/alunos/professores-disponiveis", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALUNO')")
     public ResponseEntity<?> getProfessoresDisponiveis(@RequestAttribute(value = "user") Object user) throws ApiException {
