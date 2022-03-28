@@ -2,20 +2,18 @@ package com.psoft.tccmatch.service;
 
 import com.psoft.tccmatch.DTO.ReporteDTO;
 import com.psoft.tccmatch.exception.ApiException;
-import com.psoft.tccmatch.model.Aluno;
-import com.psoft.tccmatch.model.Orientacao;
-import com.psoft.tccmatch.model.Professor;
-import com.psoft.tccmatch.model.Reporte;
+import com.psoft.tccmatch.model.*;
+import com.psoft.tccmatch.processors.ReporteProcessor.ReporteProcessor;
 import com.psoft.tccmatch.repository.AlunoRepository;
 import com.psoft.tccmatch.repository.OrientacaoRepository;
 import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.repository.ReporteRepository;
 import com.psoft.tccmatch.util.ErroReporte;
-import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -32,8 +30,14 @@ public class ReporteServiceImpl implements ReporteService {
     @Autowired
     private ProfessorRepository professorRepository;
 
+    private final Map<String, ReporteProcessor> reporteProcessors;
+
+    public ReporteServiceImpl(Map<String, ReporteProcessor> reporteProcessors) {
+        this.reporteProcessors = reporteProcessors;
+    }
+
     @Override
-    public Reporte cria(Object user, Long orientacao_id, ReporteDTO dto) throws ApiException {
+    public Reporte cria(User user, Long orientacao_id, ReporteDTO dto) throws ApiException {
         Optional<Orientacao> orientacao_opt = orientacaoRepository.findById(orientacao_id);
 
         if (orientacao_opt.isEmpty()) {
@@ -43,35 +47,9 @@ public class ReporteServiceImpl implements ReporteService {
         Orientacao orientacao = orientacao_opt.get();
         Reporte reporte = new Reporte(dto.getPeriodo(), dto.getProblema(), orientacao);
 
-        if (user instanceof Aluno) {
-            Aluno aluno = alunoRepository.getOne(((Aluno) user).getId());
-            Optional<Reporte> reporte_opt = reporteRepository.findByAlunoAndPeriodoAndProblemaAndOrientacao(
-                    aluno,
-                    dto.getPeriodo(),
-                    dto.getProblema(),
-                    orientacao
-            );
-            if (reporte_opt.isPresent()) {
-                throw ErroReporte.erroReporteJaExiste();
-            }
-            reporte.setAluno((Aluno) user);
-        } else if (user instanceof Professor) {
-            Professor professor = professorRepository.getOne(((Professor) user).getId());
-            Optional<Reporte> reporte_opt = reporteRepository.findByProfessorAndPeriodoAndProblemaAndOrientacao(
-                    professor,
-                    dto.getPeriodo(),
-                    dto.getProblema(),
-                    orientacao
-            );
-            if (reporte_opt.isPresent()) {
-                throw ErroReporte.erroReporteJaExiste();
-            }
-            reporte.setProfessor((Professor) user);
-        } else {
-            throw ErroUser.erroTipoUsuario();
-        }
-
-        return reporteRepository.save(reporte);
+        return reporteProcessors.get(getProcessorName(user)).criar(
+                user, reporte, orientacao, dto
+        );
     }
 
     @Override
@@ -92,5 +70,7 @@ public class ReporteServiceImpl implements ReporteService {
         return new ReporteDTO.RespostaApiLista(reportes_aluno, reportes_professores);
     }
 
-
+    private String getProcessorName(User user) {
+        return user.getTipo().name() + "_Reporte";
+    }
 }

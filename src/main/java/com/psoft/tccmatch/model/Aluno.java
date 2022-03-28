@@ -86,6 +86,11 @@ public class Aluno implements User {
     }
 
     @Override
+    public Tipo getTipo() {
+        return Tipo.ALUNO;
+    }
+
+    @Override
     public String toString() {
         return this.matricula + " - " + this.nome + " - " + this.email;
     }

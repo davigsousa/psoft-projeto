@@ -3,6 +3,7 @@ package com.psoft.tccmatch.controller;
 import com.psoft.tccmatch.DTO.SolicitacaoOrientacaoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.SolicitacaoOrientacao;
+import com.psoft.tccmatch.model.User;
 import com.psoft.tccmatch.service.SolicitacaoOrientacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,14 @@ public class SolicitacaoOrientacaoController {
             @PathVariable("idProposta") Long idProposta,
             @RequestAttribute("user") Object user
     ) throws ApiException {
-        SolicitacaoOrientacao response = solicitacaoOrientacaoService.solicitarOrientacao(idProposta, user);
+        SolicitacaoOrientacao response = solicitacaoOrientacaoService.solicitarOrientacao(idProposta, (User) user);
         return ResponseEntity.status(201).body(new SolicitacaoOrientacaoDTO.RespostaAPI(response));
     }
 
     @RequestMapping(path = "/solicitacoes", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ALUNO', 'PROFESSOR')")
     public ResponseEntity<?> listarSolicitacoes(@RequestAttribute("user") Object user) throws ApiException {
-        List<SolicitacaoOrientacao> solicitacoes = solicitacaoOrientacaoService.listar(user);
+        List<SolicitacaoOrientacao> solicitacoes = solicitacaoOrientacaoService.listar((User) user);
 
         List<SolicitacaoOrientacaoDTO.RespostaAPI> resultado = solicitacoes.stream()
                 .map(SolicitacaoOrientacaoDTO.RespostaAPI::new).collect(Collectors.toList());
