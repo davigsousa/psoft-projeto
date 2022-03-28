@@ -1,4 +1,4 @@
-package com.psoft.tccmatch.processors;
+package com.psoft.tccmatch.processors.ManipularAreaEstudoProcessor;
 
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.Aluno;

@@ -1,4 +1,4 @@
-package com.psoft.tccmatch.processors;
+package com.psoft.tccmatch.processors.ReporteProcessor;
 
 import com.psoft.tccmatch.DTO.ReporteDTO;
 import com.psoft.tccmatch.exception.ApiException;

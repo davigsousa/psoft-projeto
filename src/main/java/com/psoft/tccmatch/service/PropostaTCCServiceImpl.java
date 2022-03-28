@@ -4,15 +4,11 @@ import com.psoft.tccmatch.DTO.PropostaTCCDTO;
 import com.psoft.tccmatch.enviadores.CriacaoPropostaTCCEmail;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.*;
-import com.psoft.tccmatch.processors.PropostaTCCProcessor;
+import com.psoft.tccmatch.processors.PropostaTCCProcessor.PropostaTCCProcessor;
 import com.psoft.tccmatch.repository.AlunoRepository;
-import com.psoft.tccmatch.repository.AreaEstudoRepository;
 import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.repository.PropostaTCCRepository;
-import com.psoft.tccmatch.util.ErroAreaEstudo;
-import com.psoft.tccmatch.util.ErroProposta;
 import com.psoft.tccmatch.util.ErroTCC;
-import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

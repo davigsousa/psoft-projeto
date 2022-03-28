@@ -4,7 +4,7 @@ import com.psoft.tccmatch.DTO.AreaDeEstudoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.model.User;
-import com.psoft.tccmatch.processors.ManipularAreaEstudoProcessor;
+import com.psoft.tccmatch.processors.ManipularAreaEstudoProcessor.ManipularAreaEstudoProcessor;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
 import com.psoft.tccmatch.util.ErroAreaEstudo;
 import org.springframework.beans.factory.annotation.Autowired;

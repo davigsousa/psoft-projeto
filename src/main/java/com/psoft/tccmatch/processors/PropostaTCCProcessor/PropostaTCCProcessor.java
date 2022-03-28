@@ -1,4 +1,4 @@
-package com.psoft.tccmatch.processors;
+package com.psoft.tccmatch.processors.PropostaTCCProcessor;
 
 import com.psoft.tccmatch.DTO.PropostaTCCDTO;
 import com.psoft.tccmatch.model.PropostaTCC;

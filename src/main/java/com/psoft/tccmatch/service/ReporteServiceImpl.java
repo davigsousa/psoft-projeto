@@ -3,13 +3,12 @@ package com.psoft.tccmatch.service;
 import com.psoft.tccmatch.DTO.ReporteDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.*;
-import com.psoft.tccmatch.processors.ReporteProcessor;
+import com.psoft.tccmatch.processors.ReporteProcessor.ReporteProcessor;
 import com.psoft.tccmatch.repository.AlunoRepository;
 import com.psoft.tccmatch.repository.OrientacaoRepository;
 import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.repository.ReporteRepository;
 import com.psoft.tccmatch.util.ErroReporte;
-import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

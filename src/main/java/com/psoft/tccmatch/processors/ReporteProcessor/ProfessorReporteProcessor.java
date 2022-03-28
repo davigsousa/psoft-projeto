@@ -1,23 +1,22 @@
-package com.psoft.tccmatch.processors;
+package com.psoft.tccmatch.processors.ReporteProcessor;
 
 import com.psoft.tccmatch.DTO.ReporteDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.*;
-import com.psoft.tccmatch.repository.AlunoRepository;
+import com.psoft.tccmatch.repository.ProfessorRepository;
 import com.psoft.tccmatch.repository.ReporteRepository;
 import com.psoft.tccmatch.util.ErroReporte;
-import com.psoft.tccmatch.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component("ALUNO_Reporte")
-public class AlunoReporteProcessor implements ReporteProcessor {
+@Component("PROF_Reporte")
+public class ProfessorReporteProcessor implements ReporteProcessor {
     @Lazy
     @Autowired
-    private AlunoRepository alunoRepository;
+    private ProfessorRepository professorRepository;
 
     @Lazy
     @Autowired
@@ -25,10 +24,10 @@ public class AlunoReporteProcessor implements ReporteProcessor {
 
     @Override
     public Reporte criar(User user, Reporte reporte, Orientacao orientacao, ReporteDTO dto) throws ApiException {
-        Aluno aluno = alunoRepository.getOne(((Aluno) user).getId());
+        Professor professor = professorRepository.getOne(((Professor) user).getId());
 
-        Optional<Reporte> reporte_opt = reporteRepository.findByAlunoAndPeriodoAndProblemaAndOrientacao(
-                aluno,
+        Optional<Reporte> reporte_opt = reporteRepository.findByProfessorAndPeriodoAndProblemaAndOrientacao(
+                professor,
                 dto.getPeriodo(),
                 dto.getProblema(),
                 orientacao
@@ -37,7 +36,7 @@ public class AlunoReporteProcessor implements ReporteProcessor {
         if (reporte_opt.isPresent()) {
             throw ErroReporte.erroReporteJaExiste();
         }
-        reporte.setAluno(aluno);
+        reporte.setProfessor((Professor) user);
 
         return reporteRepository.save(reporte);
     }
