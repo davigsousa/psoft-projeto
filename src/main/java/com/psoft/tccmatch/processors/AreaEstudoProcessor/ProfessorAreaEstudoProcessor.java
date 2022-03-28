@@ -1,4 +1,4 @@
-package com.psoft.tccmatch.processors.ManipularAreaEstudoProcessor;
+package com.psoft.tccmatch.processors.AreaEstudoProcessor;
 
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component("PROF_Area")
-public class ProfessorManipularAreaEstudoProcessor implements ManipularAreaEstudoProcessor {
+public class ProfessorAreaEstudoProcessor implements AreaEstudoProcessor {
     @Lazy
     @Autowired
     private ProfessorService professorService;

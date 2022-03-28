@@ -4,7 +4,7 @@ import com.psoft.tccmatch.DTO.AreaDeEstudoDTO;
 import com.psoft.tccmatch.exception.ApiException;
 import com.psoft.tccmatch.model.AreaEstudo;
 import com.psoft.tccmatch.model.User;
-import com.psoft.tccmatch.processors.ManipularAreaEstudoProcessor.ManipularAreaEstudoProcessor;
+import com.psoft.tccmatch.processors.AreaEstudoProcessor.AreaEstudoProcessor;
 import com.psoft.tccmatch.repository.AreaEstudoRepository;
 import com.psoft.tccmatch.util.ErroAreaEstudo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,10 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     @Autowired
     private AreaEstudoRepository areaEstudoRepository;
 
-    private final Map<String, ManipularAreaEstudoProcessor> manipularAreaEstudoProcessors;
+    private final Map<String, AreaEstudoProcessor> areaEstudoProcessors;
 
-    public AreaEstudoServiceImpl(Map<String, ManipularAreaEstudoProcessor> manipularAreaEstudoProcessors) {
-        this.manipularAreaEstudoProcessors = manipularAreaEstudoProcessors;
+    public AreaEstudoServiceImpl(Map<String, AreaEstudoProcessor> areaEstudoProcessors) {
+        this.areaEstudoProcessors = areaEstudoProcessors;
     }
 
     @Override
@@ -63,14 +63,14 @@ public class AreaEstudoServiceImpl implements AreaEstudoService{
     public void selecionar(Long areaId, User user) throws ApiException {
         AreaEstudo area = getById(areaId);
         String name = getProcessorName(user);
-        manipularAreaEstudoProcessors.get(name).selecionarArea(area, user);
+        areaEstudoProcessors.get(name).selecionarArea(area, user);
     }
 
     @Override
     public void desselecionar(Long areaId, User user) throws ApiException {
         AreaEstudo area = getById(areaId);
         String name = getProcessorName(user);
-        manipularAreaEstudoProcessors.get(name).desselecionarArea(area, user);
+        areaEstudoProcessors.get(name).desselecionarArea(area, user);
     }
 
     private String getProcessorName(User user) {
